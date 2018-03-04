@@ -6,6 +6,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 //Authentication
+const spreadSheet = require('./routes/spreadsheets');
 const LocalStrategy = require('passport-local').Strategy;
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
@@ -53,10 +54,12 @@ app.post('/form', passport.authenticate('local', { session: false }),
 app.use( express.static(path.join(__dirname, 'dist')));
 app.use('/', express.static(path.join(__dirname, 'dist')));
 
+app.use('/api', spreadSheet);
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

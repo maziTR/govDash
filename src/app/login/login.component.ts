@@ -13,21 +13,12 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, public router: Router) { }
 
   ngOnInit() {
-
-    this.user = {
-      username: '',
-      password: ''
-    };
-
-   // this.token = this.authService.getLocalStorage();
   }
 
   login(){
     this.authService.login(this.user).subscribe(
       data => {this.authService.setLocalStorage(data.token)
         let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '';
-        // Set our navigation extras object
-        // that passes on our global query params and fragment
         let navigationExtras: NavigationExtras = {
           queryParamsHandling: 'preserve',
           preserveFragment: true
