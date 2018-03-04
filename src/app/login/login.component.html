@@ -1,0 +1,18 @@
+<form >
+  <fieldset>
+      <legend>Login</legend>
+      <span class="err"></span>
+      <div class="form-field">
+          <label>Email:</label>
+          <input [(ngModel)]="user.username" name="username">
+      </div>
+      <div class="form-field">
+          <label>Password:</label>
+          <input [(ngModel)]="user.password" type="password" name="password">
+      </div>
+  </fieldset>
+  <div class="form-buttons">
+      <a href="/auth/google">Sign In with Google</a>
+      <button class="button button-primary" type="button" (click)="login()">Login</button>
+  </div>
+</form>
