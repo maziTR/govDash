@@ -31,23 +31,23 @@ export class BarChartComponent implements OnInit {
       "dataProvider": [{
         "year": "2003",
         "europe": 2.5,
-        "namerica": 2.5,
+        "status": 2.5,
         "asia": 2.1,
         "lamerica": 0.3,
         "meast": 0.2,
         "africa": 0.1
       }, {
         "year": "2004",
-        "europe": 2.6,
-        "namerica": 2.7,
+        "task": 2.6,
+        "status": 2.7,
         "asia": 2.2,
         "lamerica": 0.3,
         "meast": 0.3,
         "africa": 0.1
       }, {
         "year": "2005",
-        "europe": 2.8,
-        "namerica": 2.9,
+        "task": 2.8,
+        "status": 2.9,
         "asia": 2.4,
         "lamerica": 0.3,
         "meast": 0.3,

@@ -37,8 +37,35 @@ export class AppComponent implements OnInit{
   getSheets() {
     console.log(this.inputText);
     this.tableService.getTables(this.inputText).subscribe(data => {
-      this.sheets = data;
-      console.log(this.sheets);
+      this.sheets = data;      
+      var sheet = this.sheets[0]
+      var field_count = {}
+      for (var i=1; i<sheet.length; i++){    
+        var field = sheet[i][3];
+        var status = sheet[i][105];
+        if (status) {
+          if(field_count[field]) {
+            if (field_count[field][status]) {
+              field_count[field][status]++
+            }
+            else {
+              field_count[field][status]=1;
+              
+            }
+
+          }else{
+            field_count[field] = {};
+            field_count[field][status] = 1
+          }
+        }
+
+      }
+
+      // var healthData = this.sheets.filter(field => field.length < 10)
+      console.log(JSON.stringify(field_count))
+
+
+
     })
   }
 

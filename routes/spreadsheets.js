@@ -43,7 +43,7 @@ router.get('/login', function (req, res) {
     });
 });
 
-router.get('/google/auth', function (req, res) {
+router.get('/google/auth/callback', function (req, res) {
     authorize(req.query.code, function () {
         res.redirect('/');
     });
