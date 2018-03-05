@@ -3,6 +3,29 @@
 <div style="text-align:center">
   <div class="under-nav"></div>
 
+<div *ngIf="showLoginButton">
+    <a href="http://localhost:3000/api/login">
+      <button>Login</button>
+    </a>
+  </div>
+
+  <div *ngIf="files.length > 0">
+    <ul>Your Google sheets files:
+      <li *ngFor="let file of files">{{file.name}} (id: {{file.id}})</li>
+    </ul>
+
+    <div>
+      Choose your file (type the id):
+      <input type="text" [(ngModel)]="inputText" placeholder="file id here" />
+      <button (click)="getSheets()">Go</button>
+    </div>
+
+    <div *ngIf="sheets.length > 0">
+      <div>Your data in the file:</div>
+      {{sheets}}
+    </div>
+
+
   <pie-chart></pie-chart>
   <bar-chart></bar-chart>
 

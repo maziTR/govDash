@@ -17,6 +17,7 @@ import { ExecutionDashboardComponent } from './execution-dashboard/execution-das
 import { BlockersDashboardComponent } from './blockers-dashboard/blockers-dashboard.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { TablesService } from './tables.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     BrowserAnimationsModule,
     AmChartsModule
   ],
-  providers: [AuthService,
+  providers: [AuthService, TablesService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

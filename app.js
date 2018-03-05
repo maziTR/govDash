@@ -16,6 +16,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 
+var spreadSheet = require('./routes/spreadsheets');
+
 //Authentication middleware
 
 app.use(passport.initialize());
@@ -34,6 +36,8 @@ passport.use(new LocalStrategy(
   const checkIfAuthenticated = expressJwt({
     secret: 'thisIsTopSecret'
 });
+
+app.use('/api', spreadSheet);
 
   app.post('/userDetails',checkIfAuthenticated, function (req, res){
       res.send(req.body);
