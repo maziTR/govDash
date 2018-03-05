@@ -5,56 +5,82 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const spreadSheet = require('./routes/spreadsheets');
-//Authentication
-const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const expressJwt = require('express-jwt');
 const app = express();
+
+const google = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
+const TOKEN_DIR = './credentials/';
+const TOKEN_PATH = TOKEN_DIR + 'details.json';
+var oauth2Client;
+var url;
+const SCOPES = ['https://www.googleapis.com/auth/drive'];
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
+const expressSession=require('express-session');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 
-//Authentication middleware
+//session middleware
+app.use(expressSession({ secret: 'thisIsASecret', resave: false, saveUninitialized: false, session:true}));
 
 app.use(passport.initialize());
+app.use(passport.session());
 
-passport.use(new LocalStrategy(
-  //    { passReqToCallback : true},
-    function(username, password, done) {
-      if ((username === "john") && (password === "password")) {
-        return done(null, { username: username, id: 1 });
-      } else {
-        return done(null, false, "Failed to login.");
-      }
-    }
-  )); 
-
-  const checkIfAuthenticated = expressJwt({
-    secret: 'thisIsTopSecret'
-});
-
-  app.post('/userDetails',checkIfAuthenticated, function (req, res){
-      res.send(req.body);
+passport.serializeUser(function(user, done) {
+    console.log(user);
+    done(null, user);
+  });
+  
+  passport.deserializeUser(function(user, done) {
+    done(null, user);
   });
 
-app.get('/logout', function (req, res) {
-  req.logout();
-  res.send('Logged out!');
-});
+  function authOnly(req,res,next){
+    if (req.isAuthenticated()){
+       next();
+    } else {
+        res.redirect('/');
+    }
+  }
 
-app.post('/form', passport.authenticate('local', { session: false }),
-  (req, res) => {
-    var token = jwt.sign(req.user, 'thisIsTopSecret', { expiresIn: "7d" });
-    res.send({token});
-});
+//Authentication middleware?
 
 app.use( express.static(path.join(__dirname, 'dist')));
-app.use('/', express.static(path.join(__dirname, 'dist')));
-app.use('/api', spreadSheet);
+app.use('/', express.static(path.join(__dirname, 'dist'))); 
 
-app.get('*', function(req, res) {
+passport.use(new GoogleStrategy({
+  clientID: "834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com",
+  clientSecret: "z51bBjQNgS2__hu2X8rxx6oD",
+  callbackURL: "http://localhost:3000/api/google/auth/callback",
+  passReqToCallback   : true
+},
+function(accessToken, refreshToken, profile, done) {
+     User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        console.log(refreshToken)
+        //send google token to db
+        return done(err, user);
+     });
+}
+));
+
+/* app.get('/', function(req, res){
+  res.render('index', { user: req.user });
+}); */
+
+app.get('api/google/auth',
+passport.authenticate('google', { scope: SCOPES })
+);
+
+app.get( 'api/google/auth/callback', 
+    	passport.authenticate( 'google', { 
+    		successRedirect: '/',
+    		failureRedirect: '/'
+}));
+
+app.get('*',authOnly, function(req, res) {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
