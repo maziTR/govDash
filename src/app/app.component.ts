@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { TablesService } from './tables.service';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +10,34 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit{
   title = 'app';
+  files: any[] = [];
+  sheets: any[] = [];
+  inputText: string;
 
-  constructor(private authService: AuthService, public router: Router) { }
+  constructor(private authService: AuthService,private tableService: TablesService, public router: Router) { }
   
   ngOnInit() {
-    this.authService.fetchUserDetails().subscribe(
+/*     this.authService.fetchUserDetails().subscribe(
       data => console.log(data)
-    );
+    ); */
+   this.tableService.getFiles().subscribe(data => {
+      this.files = data;
+      console.log(this.files);
+    });
   }
 
+  login(){
+/*     this.tableService.getFiles().subscribe(data => {
+      this.files = data;
+      console.log(this.files);
+    }); */
+  }
+
+  getSheets() {
+    console.log(this.inputText);
+    this.tableService.getTables(this.inputText).subscribe(data => {
+      this.sheets = data;
+      console.log(this.sheets);
+    })
+  }
 }

@@ -4,9 +4,9 @@ const http = require('http');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-
+const spreadSheet = require('./routes/spreadsheets');
 //Authentication
-const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
@@ -52,7 +52,7 @@ app.post('/form', passport.authenticate('local', { session: false }),
 
 app.use( express.static(path.join(__dirname, 'dist')));
 app.use('/', express.static(path.join(__dirname, 'dist')));
-
+app.use('/api', spreadSheet);
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
