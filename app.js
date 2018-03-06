@@ -29,8 +29,12 @@ app.use(expressSession({ secret: 'ilovecatsanddogstoo', resave: false, saveUnini
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.get('/api/userDetails', isLoggedIn, function (req, res){
+//   res.send(req.user);
+// });
+
 // route for logging out
-app.get('/logout', function (req, res) {
+app.get('/logout', isLoggedIn, function (req, res) {
   req.logout();
   res.send('Logged out!');
   // res.redirect('/');
@@ -39,8 +43,7 @@ app.get('/logout', function (req, res) {
 app.get('/api/google/auth', passport.authenticate('google', 
   { scope: ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/plus.login'], accessType: 'offline' }));
 
-app.get('/api/google/auth/callback',
-  passport.authenticate('google', {
+app.get('/api/google/auth/callback', passport.authenticate('google', {
     successRedirect: '/execution',
     failureRedirect: '/'
 }));
