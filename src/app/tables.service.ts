@@ -15,4 +15,24 @@ export class TablesService {
     return this.http.get<any>('/api/data/' + id);
   }
 
+  blockersChart1(data) {
+    
+    return [{arr: 'aaa', raa:'eee'}] 
+  }
+
+  blockersChart2() {
+    return
+  }
+  executionChart1() {
+    return
+  }
+  executionChart2() {
+    return
+  }
+  executionChart3() {
+    return
+  }
+  executionChart4() {
+    return
+  }
 }
