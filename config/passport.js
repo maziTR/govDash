@@ -15,7 +15,6 @@ var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
 module.exports = function (passport) {
     // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
-        console.log("in serialize");
         done(null, user.id);
     });
 

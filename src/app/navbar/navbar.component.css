@@ -18,3 +18,7 @@ nav{
     justify-content: flex-start;
     transition: all 0.3s 
 }
+
+fa-sign-out {
+    padding-left: 10px;
+}
