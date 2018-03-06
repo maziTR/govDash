@@ -17,6 +17,8 @@ import { BlockersDashboardComponent } from './blockers-dashboard/blockers-dashbo
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { TablesService } from './tables.service';
+import { AmChartsModule, AmChartsService } from "@amcharts/amcharts3-angular";
+import { ChartsCalculationsService } from './charts-calculations.service';
 
 @NgModule({
   declarations: [
@@ -33,9 +35,11 @@ import { TablesService } from './tables.service';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AmChartsModule
   ],
-  providers: [AuthService,TablesService,
+  providers: [AuthService,TablesService,AmChartsService
+    ,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,

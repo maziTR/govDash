@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@amcharts/amcharts3-angular": "^2.0.3",
     "@angular/animations": "^5.2.6",
     "@angular/cdk": "^5.2.2",
     "@angular/common": "^5.2.0",
@@ -23,6 +24,7 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "amcharts": "^3.14.5",
     "amcharts3": "^3.21.12",
     "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0",
