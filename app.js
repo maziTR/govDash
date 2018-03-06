@@ -11,6 +11,12 @@ var cookieParser = require('cookie-parser');
 const passport = require('passport');
 const expressSession = require('express-session');
 
+var configAuth = require('./config/auth');
+var google = require('googleapis');
+var OAuth2 = google.auth.OAuth2;
+var oauth2Client = new OAuth2(configAuth.googleAuth.clientID, configAuth.googleAuth.clientSecret,
+  configAuth.googleAuth.callbackURL);
+
 var app = express();
 
 mongoose.connect(process.env.CONNECTION_STRING || 'mongodb://localhost/configDB');
@@ -29,30 +35,72 @@ app.use(expressSession({ secret: 'ilovecatsanddogstoo', resave: false, saveUnini
 app.use(passport.initialize());
 app.use(passport.session());
 
-// route for logging out
-app.get('/logout', function (req, res) {
-  req.logout();
-  res.send('Logged out!');
-  // res.redirect('/');
-});
-
-app.get('/api/google/auth', passport.authenticate('google', 
+app.get('/api/google/auth', passport.authenticate('google',
   { scope: ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/plus.login'], accessType: 'offline' }));
 
-app.get('/api/google/auth/callback',
-  passport.authenticate('google', {
-    successRedirect: '/execution',
-    failureRedirect: '/'
+app.get('/api/google/auth/callback', passport.authenticate('google', {
+  successRedirect: '/execution',
+  failureRedirect: '/'
+  // failureRedirect: '/login-error' - TODO - use this when we have a unauthorized page
 }));
+
+// get the sheets data from the users file
+app.get('/api/data', isLoggedIn, function (req, res) {
+  oauth2Client.credentials = { access_token: req.user.accessToken, refresh_token: req.user.refreshToken };
+  getSheetsData(oauth2Client, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg", function (data) {
+    res.send(JSON.stringify(data));
+  });
+});
+
+app.get('/userDetails', isLoggedIn, function (req, res) {
+  res.send(req.user);
+});
+
+function getSheetsData(auth, id, callback) {
+  var sheets = google.sheets('v4');
+  var sheetsResult = [];
+  sheets.spreadsheets.values.batchGet({
+    auth: auth,
+    spreadsheetId: id,
+    ranges: ["'DATA'"]
+  }, function (err, response) {
+    if (err) {
+      console.log('The API returned an error: ' + err);
+      return;
+    }
+    var rows = response.valueRanges;
+    if (rows.length == 0) {
+      console.log('No data found.');
+    } else {
+      for (let i = 0; i < rows.length; i++) {
+        sheetsResult[i] = rows[i].values;
+      }
+    }
+    callback(sheetsResult);
+  });
+}
+
+// route for logging out
+app.get('/logout', isLoggedIn, function (req, res) {
+  req.logout();
+  // res.send('Logged out!');
+  res.redirect('/');
+});
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated())
-        return next();
-    // if they aren't redirect them to the login page
-    res.redirect('/');
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+    return next();
+  // if they aren't redirect them to the login page
+  res.redirect('/');
 }
+
+// TODO - put this function to use when we have a unauthorized page
+// app.get('/login-error', (req, res) => {
+//   // TODO - make sure Shir page is in src
+//   res.sendFile(path.join(__dirname, 'src/unauthorized.html'));
+// });
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/', express.static(path.join(__dirname, 'dist')));
@@ -76,7 +124,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.json({error: err});
+  res.json({ error: err });
 });
 
 module.exports = app;

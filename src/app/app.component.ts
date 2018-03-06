@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { TablesService } from './tables.service';
-
+import { BarChartComponent } from './bar-chart/bar-chart.component'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,10 +20,10 @@ export class AppComponent implements OnInit{
 /*     this.authService.fetchUserDetails().subscribe(
       data => console.log(data)
     ); */
-   this.tableService.getFiles().subscribe(data => {
-      this.files = data;
-      console.log(this.files);
-    });
+  //  this.tableService.getFiles().subscribe(data => {
+  //     this.files = data;
+  //     console.log(this.files);
+  //   });
   }
 
   login(){
@@ -33,11 +33,11 @@ export class AppComponent implements OnInit{
     }); */
   }
 
-  getSheets() {
-    console.log(this.inputText);
-    this.tableService.getTables(this.inputText).subscribe(data => {
-      this.sheets = data;
-      console.log(this.sheets);
-    })
-  }
+  // getSheets() {
+  //   console.log(this.inputText);
+  //   this.tableService.getTables(this.inputText).subscribe(data => {
+  //     this.sheets = data;
+  //     console.log(this.sheets);
+  //   })
+  // }
 }

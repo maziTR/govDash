@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TablesService } from '../tables.service';
 
 @Component({
   selector: 'app-execution-dashboard',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./execution-dashboard.component.css']
 })
 export class ExecutionDashboardComponent implements OnInit {
+  sheets: any[];
 
-  constructor() { }
+  constructor(private tablesService: TablesService) { }
 
   ngOnInit() {
+    this.tablesService.getTables().subscribe(data => this.sheets = data);
   }
-
 }
