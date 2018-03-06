@@ -1,3 +1,29 @@
 form {
     margin-top: 5em;
 }
+
+a {
+    display: inline-block;
+    background: #f5efef;
+    color: black;
+    width: 190px;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 1px 1px 1px grey;
+    white-space: nowrap;
+    margin-top: 10px;
+    padding: 2px;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.wellcome {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 35px;
+    font-weight: 300;
+    line-height: 45px;
+    padding-top: 30px;
+}
