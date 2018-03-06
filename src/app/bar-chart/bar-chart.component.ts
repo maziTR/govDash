@@ -10,7 +10,7 @@ import { TablesService } from '../tables.service';
 })
 export class BarChartComponent implements OnInit {
   private chart: AmChart;
-  data: any[];
+  data:any;
   sheets:any[];
 
   constructor(private AmCharts: AmChartsService,
@@ -18,7 +18,7 @@ export class BarChartComponent implements OnInit {
               private tableService: TablesService) { }
 
   ngOnInit() {
-    this.test.getSheets();
+    // ::this.test.getSheets();
     this.tableService.getTables().subscribe(data => {
       this.sheets = data; 
       var sheet = this.sheets[0]
@@ -45,8 +45,11 @@ export class BarChartComponent implements OnInit {
             field_count[field][status] = 1
           }
         }
+
         // return field_count
       }
+      console.log(field_count[field])
+
       console.log(field_count);
       var output_array = [];
 
@@ -59,13 +62,16 @@ export class BarChartComponent implements OnInit {
         }
         output_array.push(graph_object)
       }
-      console.log(output_array)
-      return output_array
+      output_array.unshift(output_array.pop())
+      this.data = JSON.stringify(output_array)
+      console.log(this.data)
+
 
     })
   }
 
   ngAfterViewInit() {
+    // this.data = this.ngOnInit()
     this.chart = this.AmCharts.makeChart("chartdiv", {
       "type": "serial",
       "theme": "light",
@@ -79,31 +85,7 @@ export class BarChartComponent implements OnInit {
         "valueAlign": "left",
         "valueWidth": 0
       },
-      "dataProvider": [{
-        "year": "2003",
-        "europe": 2.5,
-        "status": 2.5,
-        "asia": 2.1,
-        "lamerica": 0.3,
-        "meast": 0.2,
-        "africa": 0.1
-      }, {
-        "year": "2004",
-        "task": 2.6,
-        "status": 2.7,
-        "asia": 2.2,
-        "lamerica": 0.3,
-        "meast": 0.3,
-        "africa": 0.1
-      }, {
-        "year": "2005",
-        "task": 2.8,
-        "status": 2.9,
-        "asia": 2.4,
-        "lamerica": 0.3,
-        "meast": 0.3,
-        "africa": 0.1
-      }],
+      "dataProvider": this.data,
       "valueAxes": [{
         "id": "v1",
         "stackType": "100%",
