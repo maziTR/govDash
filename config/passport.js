@@ -15,6 +15,7 @@ var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
 module.exports = function (passport) {
     // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
+        console.log("in serialize");
         done(null, user.id);
     });
 
@@ -40,30 +41,39 @@ module.exports = function (passport) {
                         return done(err);
                     if (user) {
                         // if a user is found and authorized to view our file, log them in
-                        if (checkAuthorization(accessToken, refreshToken, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg")) {
-                            return done(null, user);
-                        }
+                        checkAuthorization(accessToken, refreshToken, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg",
+                            function (response) {
+                                if (response) {
+                                    return done(null, user);
+                                } else {
+                                    return done(null, false);
+                                }
+                            });
                     } else {
                         // if the user is not in our database but authorized to view our file, create a new user
-                        if (checkAuthorization(accessToken, refreshToken, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg")) {
-                            var newUser = new User({
-                                googleId: profile.id, accessToken: accessToken, refreshToken: refreshToken,
-                                name: profile.displayName
+                        checkAuthorization(accessToken, refreshToken, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg",
+                            function (response) {
+                                if (response) {
+                                    var newUser = new User({
+                                        googleId: profile.id, accessToken: accessToken, refreshToken: refreshToken,
+                                        name: profile.displayName
+                                    });
+                                    newUser.save(function (err) {
+                                        if (err) console.error(err);
+                                        return done(null, newUser);
+                                    });
+                                } else {
+                                    return done(null, false);
+                                }
                             });
-                            newUser.save(function (err) {
-                                if (err) console.error(err);
-                                return done(null, newUser);
-                            });
-                        }
                     }
-                    return done(null, false);
                 });
             });
 
         }));
 
     // check if the client is allowed to see our file
-    function checkAuthorization(accessToken, refreshToken, fileId) {
+    function checkAuthorization(accessToken, refreshToken, fileId, callback) {
         oauth2Client.credentials = { access_token: accessToken, refresh_token: refreshToken };
         var drive = google.drive('v3');
         drive.files.list({
@@ -77,12 +87,11 @@ module.exports = function (passport) {
                 if (files.length > 0 && files.findIndex(element => element.id === fileId) > -1) {
                     isAuthorized = true;
                 }
-                return isAuthorized;
+                callback(isAuthorized);
             } else {
                 console.log('The API returned an error: ' + err);
-                return false;
+                callback(false);
             }
         });
     }
-
 };
