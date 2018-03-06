@@ -56,8 +56,8 @@ router.get('/data', function (req, res) {
     });
 });
 
-router.get('/data/:id', function (req, res) {
-    getSheetsData(oauth2Client, req.params.id, function (data) {
+router.get('/data/id', function (req, res) {
+    getSheetsData(oauth2Client, function (data) {
         res.send(JSON.stringify(data));
     });
 })
@@ -114,12 +114,12 @@ function listFiles(auth, callback) {
     });
 }
 
-function getSheetsData(auth, id, callback) {
+function getSheetsData(auth, callback) {
     var sheets = google.sheets('v4');
     var sheetsResult = [];
     sheets.spreadsheets.values.batchGet({
         auth: auth,
-        spreadsheetId: id,
+        spreadsheetId: "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg",
         ranges: ["'DATA'"]
         // ranges: ["'גיליון1'!A1:Z", "'גיליון2'!A1:Z"]
     }, function (err, response) {

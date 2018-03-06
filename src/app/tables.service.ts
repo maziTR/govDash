@@ -11,8 +11,8 @@ export class TablesService {
     return this.http.get<any>('/api/data');
   }
 
-  getTables(id: string): Observable<any> {
-    return this.http.get<any>('/api/data/' + id);
+  getTables(): Observable<any> {
+    return this.http.get<any>('/api/data/id');
   }
 
 }
