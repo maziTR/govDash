@@ -13,7 +13,7 @@ const expressSession = require('express-session');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost/configDB');
+mongoose.connect(process.env.CONNECTION_STRING || 'mongodb://localhost/configDB');
 
 require('./config/passport')(passport); // pass passport for configuration
 
