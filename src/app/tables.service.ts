@@ -12,8 +12,7 @@ export class TablesService {
   }
 
   blockersChart1(data) {
-    
-    return [{arr: 'aaa', raa:'eee'}] 
+    return [{arr: 'aaa', raa:'eee'}];
   }
 
   blockersChart2() {
