@@ -70,6 +70,10 @@ export class BarChartComponent implements OnInit {
     this.chart = this.AmCharts.makeChart("chartdiv", {
       "type": "serial",
       "theme": "light",
+      "titles": [{
+        "text": "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות",
+        "size": 20
+      }],
       "legend": {
         "autoMargins": false,
         "borderAlpha": 0.2,
@@ -151,11 +155,16 @@ export class BarChartComponent implements OnInit {
           "fillColors": "#FF0000"
         }
       ],
-      "marginTop": 30,
+      "marginTop": 60,
+      "padding": 10,
+      "fontFamily": "Arial, Helvetica, sans-serif",
       "marginRight": 0,
       "marginLeft": 0,
       "marginBottom": 40,
       "autoMargins": false,
+      "export": {
+          "enabled": true
+        },
       "categoryField": "field",
       "categoryAxis": {
         "gridPosition": "start",
