@@ -1,5 +1,9 @@
 <div class="container">
   <h2>סטטוס חסמים למשימות</h2>
+  <div *ngIf="!chart1" class="loader">
+    <div class="pacman"></div>
+    <div class="dot"></div>
+  </div>
   <div *ngIf="chart1">
     <bar-chart [data]="chart1" [chartId]="'chart1Id'"></bar-chart>
     <bar-chart [data]="chart2" [chartId]="'chart2Id'"></bar-chart>
