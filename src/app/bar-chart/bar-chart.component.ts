@@ -63,10 +63,15 @@ export class BarChartComponent implements OnInit {
         output_array.push(graph_object)
       }
       output_array.unshift(output_array.pop())
-      this.data = JSON.stringify(output_array)
+      this.data = output_array
+      // this.data = [{"field":"בריאות",
+      // "5. בוטל":17,
+      // "1. בוצע כמתוכנן במקור":15,
+      // "4. מתעכב מול תכנון מקורי":35,
+      // "2. בוצע עם שינוי תכולה (מהות ו/או זמן)":12,
+      // "3. יבוצע בהמשך, בהתאם לתכנון המקורי":12}]
       console.log(this.data)
-
-
+      this.ngAfterViewInit()
     })
   }
 
@@ -79,7 +84,7 @@ export class BarChartComponent implements OnInit {
         "autoMargins": false,
         "borderAlpha": 0.2,
         "equalWidths": false,
-        "horizontalGap": 10,
+        "horizontalGap": 40,
         "markerSize": 10,
         "useGraphSettings": true,
         "valueAlign": "left",
@@ -93,24 +98,19 @@ export class BarChartComponent implements OnInit {
         "gridAlpha": 0,
         "labelsEnabled": false,
         "position": "left"
-      }, {
-        "id": "v2",
-        "stackType": "100%",
-        "axisAlpha": 0,
-        "gridAlpha": 0,
-        "labelsEnabled": false,
-        "position": "left"
       }],
-      "graphs": [{
+      "graphs": [
+        {
         "valueAxis": "v1",
         "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
         "fillAlphas": 0.9,
         "fontSize": 11,
         "labelText": "[[percents]]%",
         "lineAlpha": 0.5,
-        "title": "Europe",
+        "title": "1. בוצע כמתוכנן במקור",
         "type": "column",
-        "valueField": "europe"
+        "valueField": "1. בוצע כמתוכנן במקור",
+        "fillColors":"#00BA54"
       }, {
         "valueAxis": "v1",
         "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
@@ -118,9 +118,10 @@ export class BarChartComponent implements OnInit {
         "fontSize": 11,
         "labelText": "[[percents]]%",
         "lineAlpha": 0.5,
-        "title": "North America",
+        "title": "2. בוצע עם שינוי תכולה (מהות ו/או זמן)",
         "type": "column",
-        "valueField": "namerica"
+        "valueField": "2. בוצע עם שינוי תכולה (מהות ו/או זמן)",
+        "fillColors": "#73D94F"
       }, {
         "valueAxis": "v1",
         "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
@@ -128,48 +129,44 @@ export class BarChartComponent implements OnInit {
         "fontSize": 11,
         "labelText": "[[percents]]%",
         "lineAlpha": 0.5,
-        "title": "Asia-Pacific",
+        "title": "3. יבוצע בהמשך, בהתאם לתכנון המקורי",
         "type": "column",
-        "valueField": "asia"
+        "valueField": "3. יבוצע בהמשך, בהתאם לתכנון המקורי",
+        "fillColors": "#F8FF00"
+
+      },
+      {
+        "valueAxis": "v1",
+        "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
+        "fillAlphas": 0.9,
+        "fontSize": 11,
+        "labelText": "[[percents]]%",
+        "lineAlpha": 0.5,
+        "title": "4. מתעכב מול תכנון מקורי",
+        "type": "column",
+        "valueField": "4. מתעכב מול תכנון מקורי",
+        "fillColors": "#FFC200"
+
+      },
+      {
+        "valueAxis": "v1",
+        "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
+        "fillAlphas": 0.9,
+        "fontSize": 11,
+        "labelText": "[[percents]]%",
+        "lineAlpha": 0.5,
+        "title": "5. בוטל",
+        "type": "column",
+        "valueField": "5. בוטל",
+        "fillColors": "#FF0000"
       }
-        // }, {
-        //   "valueAxis": "v2",
-        //   "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-        //   "fillAlphas": 0.9,
-        //   "fontSize": 11,
-        //   "labelText": "[[percents]]%",
-        //   "lineAlpha": 0.5,
-        //   "title": "Latin America",
-        //   "type": "column",
-        //   "valueField": "lamerica"
-        // }, {
-        //   "valueAxis": "v2",
-        //   "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-        //   "fillAlphas": 0.9,
-        //   "fontSize": 11,
-        //   "labelText": "[[percents]]%",
-        //   "lineAlpha": 0.5,
-        //   "title": "Middle-East",
-        //   "type": "column",
-        //   "valueField": "meast"
-        // }, {
-        //   "valueAxis": "v2",
-        //   "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-        //   "fillAlphas": 0.9,
-        //   "fontSize": 11,
-        //   "labelText": "[[percents]]%",
-        //   "lineAlpha": 0.5,
-        //   "title": "Africa",
-        //   "type": "column",
-        //   "valueField": "africa"
-        // }],
       ],
       "marginTop": 30,
       "marginRight": 0,
       "marginLeft": 0,
       "marginBottom": 40,
       "autoMargins": false,
-      "categoryField": "year",
+      "categoryField": "field",
       "categoryAxis": {
         "gridPosition": "start",
         "axisAlpha": 0,
