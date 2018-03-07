@@ -20,8 +20,8 @@ export class BarChartComponent implements OnInit {
   ngOnInit() {
     this.tableService.getTables().subscribe(data => {
       this.sheets = data;
+      console.log(data)
       var sheet = this.sheets[0];
-      console.log(this.sheets)
       var field_count = {};
 
       for (var i = 1; i < sheet.length; i++) {
@@ -42,8 +42,8 @@ export class BarChartComponent implements OnInit {
       }
 
       console.log(field_count[field]);
-      console.log(field_count);
       var output_array = [];
+      var field_chart = [];
 
       for (var name in field_count) {
         var graph_object = { field: name };
@@ -51,7 +51,10 @@ export class BarChartComponent implements OnInit {
         for (status in task_details) {
           graph_object[status] = task_details[status]
         }
+        console.log(status)
         output_array.push(graph_object)
+        field_chart.push(status)
+        console.log(field_chart)
       }
       output_array.unshift(output_array.pop());
       this.data = output_array;
@@ -61,8 +64,24 @@ export class BarChartComponent implements OnInit {
       // "4. מתעכב מול תכנון מקורי":35,
       // "2. בוצע עם שינוי תכולה (מהות ו/או זמן)":12,
       // "3. יבוצע בהמשך, בהתאם לתכנון המקורי":12}]
-      console.log(this.data);
       this.ngAfterViewInit();
+      var charts_format = [{
+        "valueAxis": "v1",
+        "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
+        "fillAlphas": 0.9,
+        "fontSize": 11,
+        "labelText": "[[percents]]%",
+        "lineAlpha": 0.5,
+        "title": "1. בוצע כמתוכנן במקור",
+        "type": "column",
+        "valueField": "1. בוצע כמתוכנן במקור",
+        "fillColors": "#00BA54"
+      }]
+      for (var i=0; i<charts_format.length; i++){
+        var charts = charts_format[i];
+      }
+      
+
     })
   }
 
@@ -90,18 +109,7 @@ export class BarChartComponent implements OnInit {
         "position": "left"
       }],
       "graphs": [
-        {
-          "valueAxis": "v1",
-          "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-          "fillAlphas": 0.9,
-          "fontSize": 11,
-          "labelText": "[[percents]]%",
-          "lineAlpha": 0.5,
-          "title": "1. בוצע כמתוכנן במקור",
-          "type": "column",
-          "valueField": "1. בוצע כמתוכנן במקור",
-          "fillColors": "#00BA54"
-        }, {
+, {
           "valueAxis": "v1",
           "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
           "fillAlphas": 0.9,
