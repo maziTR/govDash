@@ -17,8 +17,8 @@ export class BlockersDashboardComponent implements OnInit {
   
     this.tableService.getTables().subscribe(
       data => {
-        this.chart1 = this.tableService.generateChart(data, [[3, 105], [3, 105], [3, 105]]);
-        this.chart2 = this.tableService.generateChart(data, [[3, 105], [3, 105], [3, 105]]);
+        this.chart1 = this.tableService.generateChart(data, [[3, 105], [3, 105], [3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
+        this.chart2 = this.tableService.generateChart(data, [[3, 105], [3, 105], [3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
       }
     );
   }

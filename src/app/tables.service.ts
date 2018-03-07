@@ -72,7 +72,7 @@ export class TablesService {
     return sumOfFieldCount;
   }
 
-  generateChart(data: any[], columns: any[]) {
+  generateChart(data: any[], columns: any[], titleText: string) {
     let sheet = data[0];
     let arrOfFieldsCount: any[] = [];
     let fieldCount = {};
@@ -106,7 +106,7 @@ export class TablesService {
     fieldChart.pop();
     graphArray = this._generateGraphArr(fieldChart);
 
-    return this.outputChart(outputArray, graphArray);
+    return this.outputChart(outputArray, graphArray, titleText);
   }
 
   _generateGraphArr(statuses:any[]) {
@@ -135,10 +135,14 @@ export class TablesService {
     return returnVal;
   }
 
-  outputChart(dataProviderArr: any[], dataGraphArr: any[]) {
+  outputChart(dataProviderArr: any[], dataGraphArr: any[], titleText: string) {
     const chart = {
       "type": "serial",
       "theme": "light",
+      "titles": [{
+        "text": titleText,
+        "size": 20
+      }],
       "legend": {
         "autoMargins": false,
         "borderAlpha": 0.2,
@@ -159,11 +163,15 @@ export class TablesService {
         "position": "left"
       }],
       "graphs": dataGraphArr,
-      "marginTop": 30,
+      "marginTop": 60,
       "marginRight": 0,
       "marginLeft": 0,
       "marginBottom": 40,
       "autoMargins": false,
+      "export": {
+        "enabled": true
+      },
+      "fontFamily": "Arial, Helvetica, sans-serif",
       "categoryField": "field",
       "categoryAxis": {
         "gridPosition": "start",
