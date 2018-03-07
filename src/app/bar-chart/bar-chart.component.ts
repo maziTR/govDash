@@ -13,13 +13,10 @@ export class BarChartComponent implements OnInit, AfterViewInit{
   constructor(private AmCharts: AmChartsService) { }
 
   ngOnInit() {
-    console.log(this.data);
   }
 
   ngAfterViewInit() {
-    console.log(this.data);
     this.chart = this.AmCharts.makeChart(this.chartId, this.data);
-    console.log(this.chart);
   }
 
     ngOnDestroy() {

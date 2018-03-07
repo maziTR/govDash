@@ -17,10 +17,10 @@ export class ExecutionDashboardComponent implements OnInit {
   ngOnInit() {
   this.tableService.getTables().subscribe(
     data => {
-      this.chart1 = this.tableService.blockersChart(data,3,105);
-      this.chart2 = this.tableService.blockersChart(data,3,105);
-      this.chart3 = this.tableService.blockersChart(data,3,105);
-      this.chart4 = this.tableService.blockersChart(data,3,105);
+      this.chart1 = this.tableService.generateChart(data, [[3, 105]]);
+      this.chart2 = this.tableService.generateChart(data, [[3, 105]]);
+      this.chart3 = this.tableService.generateChart(data, [[3, 105]]);
+      this.chart4 = this.tableService.generateChart(data, [[3, 105]]);
     }
   );
   }
