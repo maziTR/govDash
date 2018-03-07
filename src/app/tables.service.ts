@@ -36,31 +36,54 @@ export class TablesService {
     return groupedObject;
   }
 
-  sumFieldCountObjects(array) {
-    let object = array[0];
+  sumFieldCountObjects(array: any[]) {
+    // get an array of all the fields
+    let allFieldsArr = Object.keys(array[0]);
+    let sumOfFieldCount = {};
+
     for (let i = 1; i < array.length; i++) {
-      let otherObject = array[i];
-      for (let element in object) {
-        
+      let currObjKeys = Object.keys(array[i]);
+      for (let element of currObjKeys) {
+        if (allFieldsArr.indexOf(element) === -1) {
+          allFieldsArr.push(element);
+        }
       }
     }
+
+    for (let obj of array) {
+      for (let field in obj) {
+        if (sumOfFieldCount[field]) { // field already exists
+          for (let status in obj[field]) {
+            if (sumOfFieldCount[field][status]) { // status already exists
+              sumOfFieldCount[field][status] += obj[field][status];
+            } else {
+              sumOfFieldCount[field][status] = obj[field][status];
+            }
+          }
+        } else {
+          sumOfFieldCount[field] = obj[field];
+        }
+      }
+    }
+    return sumOfFieldCount;
   }
 
 
   blockersChart(data: any[], columns: any[], id: string) {
     let sheet = data[0];
-    let fieldCount = [];
-    let fieldChart = [];
-    let outputArray: any[];
-    let graphArray: any[];
+    let arrOfFieldsCount: any[] = [];
+    let fieldCount = {};
+    let fieldChart: any[] = [];
+    let outputArray: any[] = [];
+    let graphArray: any[] = [];
 
     for (let i = 0; i < columns.length; i++) {
-      fieldCount.push(this.createObjectFromArray(sheet, columns[i]));
+      arrOfFieldsCount.push(this.createObjectFromArray(sheet, columns[i]));
     }
 
     // check if we need to calculate more than 2 columns
-    if (fieldCount.length > 1) {
-      fieldCount = sumFieldCountObjects(fieldCount);
+    if (arrOfFieldsCount.length > 1) {
+      fieldCount = this.sumFieldCountObjects(arrOfFieldsCount);
     }
     
     console.log(fieldCount);
@@ -220,203 +243,7 @@ export class TablesService {
     //   }
     // }
 
-    return chart
-  }
-
-
-
-
-
-
-
-
-
-
-
-  // original code starts here
-  // blockersChart(data: any[], clm1: number, clm2: number, id: string) {
-  //   let sheet = data[0];
-
-    
-  //   let outputArray: any[];
-  //   let graphArray: any[];
-  //   let fieldCount = {};
-  //   let fieldChart = [];
-  //   for (var i = 1; i < sheet.length; i++) {
-  //     var field = sheet[i][clm1];
-  //     var status = sheet[i][clm2];
-  //     if (status) {
-  //       if (fieldCount[field]) {
-  //         if (fieldCount[field][status]) {
-  //           fieldCount[field][status]++;
-  //         }
-  //         else {
-  //           fieldCount[field][status] = 1;
-  //         }
-  //       } else {
-  //         fieldCount[field] = {};
-  //         fieldCount[field][status] = 1;
-  //       }
-  //     }
-  //   }
-  //   console.log(fieldCount);
-
-  //   for (let name in fieldCount) {
-  //     let graphObject = { field: name };
-  //     let taskDetails = fieldCount[name];
-  //     for (status in taskDetails) {
-  //       graphObject[status] = taskDetails[status]
-  //     }
-  //     outputArray.push(graphObject);
-  //     fieldChart.push(status);
-  //   }
-  //   outputArray.unshift(outputArray.pop())
-  //   // this.data = [{"field":"בריאות",
-  //   // "5. בוטל":17,
-  //   // "1. בוצע כמתוכנן במקור":15,
-  //   // "4. מתעכב מול תכנון מקורי":35,
-  //   // "2. בוצע עם שינוי תכולה (מהות ו/או זמן)":12,
-  //   // "3. יבוצע בהמשך, בהתאם לתכנון המקורי":12}]
-  //   graphArray = this._generateGraphArr(fieldChart);
-
-  //   return this.outputChart(outputArray, graphArray);
-  // }
-
-  // _generateGraphArr(statuses: string[]) {
-  //   let returnVal: any[] = [];
-  //   const colors = ['#00BA54', '#73D94F', '#F8FF00', '#FFC200', '#FF0000'];
-  //   const charts_format = {
-  //     "valueAxis": "v1",
-  //     "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //     "fillAlphas": 0.9,
-  //     "fontSize": 11,
-  //     "labelText": "[[percents]]%",
-  //     "lineAlpha": 0.5,
-  //     "title": "1. בוצע כמתוכנן במקור",
-  //     "type": "column",
-  //     "valueField": "1. בוצע כמתוכנן במקור",
-  //     "fillColors": "#00BA54"
-  //   };
-
-  //   for (let i = 0; i < statuses.length; i++) {
-  //     let currJsonObj = charts_format;
-  //     currJsonObj["title"] = statuses[i];
-  //     currJsonObj["valueField"] = statuses[i];
-  //     currJsonObj["fillColors"] = colors[i];
-  //     returnVal.push(currJsonObj);
-  //   }
-  //   return returnVal;
-  // }
-
-  // outputChart(dataProviderArr: any[], dataGraphArr: any[]) {
-  //   // this.data = this.ngOnInit()
-  //   var chart = this.AmCharts.makeChart("chartdiv", {
-  //     "type": "serial",
-  //     "theme": "light",
-  //     "legend": {
-  //       "autoMargins": false,
-  //       "borderAlpha": 0.2,
-  //       "equalWidths": false,
-  //       "horizontalGap": 40,
-  //       "markerSize": 10,
-  //       "useGraphSettings": true,
-  //       "valueAlign": "left",
-  //       "valueWidth": 0
-  //     },
-  //     "dataProvider": dataProviderArr,
-  //     "valueAxes": [{
-  //       "id": "v1",
-  //       "stackType": "100%",
-  //       "axisAlpha": 0,
-  //       "gridAlpha": 0,
-  //       "labelsEnabled": false,
-  //       "position": "left"
-  //     }],
-  //     "graphs": [{
-  //       "valueAxis": "v1",
-  //       "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //       "fillAlphas": 0.9,
-  //       "fontSize": 11,
-  //       "labelText": "[[percents]]%",
-  //       "lineAlpha": 0.5,
-  //       "title": "1. בוצע כמתוכנן במקור",
-  //       "type": "column",
-  //       "valueField": "1. בוצע כמתוכנן במקור",
-  //       "fillColors": "#00BA54"
-  //     }
-  //       , {
-  //       "valueAxis": "v1",
-  //       "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //       "fillAlphas": 0.9,
-  //       "fontSize": 11,
-  //       "labelText": "[[percents]]%",
-  //       "lineAlpha": 0.5,
-  //       "title": "2. בוצע עם שינוי תכולה (מהות ו/או זמן)",
-  //       "type": "column",
-  //       "valueField": "2. בוצע עם שינוי תכולה (מהות ו/או זמן)",
-  //       "fillColors": "#73D94F"
-  //     }, {
-  //       "valueAxis": "v1",
-  //       "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //       "fillAlphas": 0.9,
-  //       "fontSize": 11,
-  //       "labelText": "[[percents]]%",
-  //       "lineAlpha": 0.5,
-  //       "title": "3. יבוצע בהמשך, בהתאם לתכנון המקורי",
-  //       "type": "column",
-  //       "valueField": "3. יבוצע בהמשך, בהתאם לתכנון המקורי",
-  //       "fillColors": "#F8FF00"
-
-  //     },
-  //     {
-  //       "valueAxis": "v1",
-  //       "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //       "fillAlphas": 0.9,
-  //       "fontSize": 11,
-  //       "labelText": "[[percents]]%",
-  //       "lineAlpha": 0.5,
-  //       "title": "4. מתעכב מול תכנון מקורי",
-  //       "type": "column",
-  //       "valueField": "4. מתעכב מול תכנון מקורי",
-  //       "fillColors": "#FFC200"
-
-  //     },
-  //     {
-  //       "valueAxis": "v1",
-  //       "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //       "fillAlphas": 0.9,
-  //       "fontSize": 11,
-  //       "labelText": "[[percents]]%",
-  //       "lineAlpha": 0.5,
-  //       "title": "5. בוטל",
-  //       "type": "column",
-  //       "valueField": "5. בוטל",
-  //       "fillColors": "#FF0000"
-  //     }
-  //     ]
-  //     ,
-  //     "marginTop": 30,
-  //     "marginRight": 0,
-  //     "marginLeft": 0,
-  //     "marginBottom": 40,
-  //     "autoMargins": false,
-  //     "categoryField": "field",
-  //     "categoryAxis": {
-  //       "gridPosition": "start",
-  //       "axisAlpha": 0,
-  //       "gridAlpha": 0
-  //     }
-  //   });
-
-
-
-    // ngOnDestroy() {
-    //   if (this.chart) {
-    //     this.AmCharts.destroyChart(this.chart);
-    //   }
-    // }
-
-    return chart
+    return chart;
   }
 
   blockersChart2() {
