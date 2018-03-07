@@ -7,17 +7,17 @@ import { TablesService } from '../tables.service';
   styleUrls: ['./blockers-dashboard.component.css']
 })
 export class BlockersDashboardComponent implements OnInit {
-  chart1:{};
-  chart2:Array<any>;
+  // chart1:{};
+  // chart2:Array<any>;
+  // chartIds: any[];
 
   constructor(private tableService: TablesService) { }
 
   ngOnInit() {
-    this.tableService.getTables().subscribe(
-      data => {
-        this.chart1 = this.tableService.blockersChart(data,3,105);
-      }
-    )
+    // this.tableService.getTables().subscribe(
+    //   data => {
+    //     this.chart1 = this.tableService.blockersChart(data,3,105,);
+    //   }
+    // )
   }
-
 }

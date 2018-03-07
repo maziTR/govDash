@@ -26,5 +26,3 @@ export class BarChartComponent implements OnInit, AfterViewInit{
   }
 
 }
-
-
