@@ -9,14 +9,17 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 export class BarChartComponent implements OnInit, AfterViewInit{
   private chart: AmChart;
   @Input() data;
+
   constructor(private AmCharts: AmChartsService) { }
 
   ngOnInit() {
-   // console.log(this.data);
+    console.log(this.data);
   }
 
   ngAfterViewInit() {
+    console.log(this.data);
     this.chart = this.AmCharts.makeChart("chartdiv", this.data);
+    console.log(this.chart);
   }
 
 }

@@ -20,10 +20,8 @@ export class AppComponent implements OnInit{
 /*     this.authService.fetchUserDetails().subscribe(
       data => console.log(data)
     ); */
-  //  this.tableService.getFiles().subscribe(data => {
-  //     this.files = data;
-  //     console.log(this.files);
-  //   });
+
+ //  this.tableService.updateTables();
   }
 
   login(){
