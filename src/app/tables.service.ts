@@ -91,6 +91,7 @@ export class TablesService {
       fieldCount = arrOfFieldsCount[0];
     }
     
+    fieldChart= Object.keys(fieldCount[sheet[sheet.length - 1][columns[0][0]]]);
     console.log(fieldCount);
 
     for (let name in fieldCount) {
