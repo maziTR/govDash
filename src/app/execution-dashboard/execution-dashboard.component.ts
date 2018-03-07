@@ -7,11 +7,21 @@ import { TablesService } from '../tables.service';
   styleUrls: ['./execution-dashboard.component.css']
 })
 export class ExecutionDashboardComponent implements OnInit {
-  sheets: any[];
+  chart1:any;
+  chart2:any;
+  chart3:any;
+  chart4:any;
 
-  constructor(private tablesService: TablesService) { }
+  constructor(private tableService: TablesService) { }
 
   ngOnInit() {
-    this.tablesService.getTables().subscribe(data => this.sheets = data);
+  this.tableService.getTables().subscribe(
+    data => {
+      this.chart1 = this.tableService.blockersChart(data,3,105);
+      this.chart2 = this.tableService.blockersChart(data,3,105);
+      this.chart3 = this.tableService.blockersChart(data,3,105);
+      this.chart4 = this.tableService.blockersChart(data,3,105);
+    }
+  );
   }
 }

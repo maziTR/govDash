@@ -13,12 +13,6 @@ export class TablesService {
     return this.http.get<any>('/api/data');
   }
 
-  updateTables(){
-    this.getTables().subscribe(
-      data => this.rawData = data
-    )
-  }
-
   blockersChart(data: any[], clm1: number, clm2: number) {
 
     let sheet = data[0];
@@ -47,8 +41,8 @@ export class TablesService {
       // return field_count
     }
     console.log(field_count[field]);
-   // console.log(Object.keys(field_count[field]))
-    field_chart= Object.keys(field_count[field]); /////
+
+    field_chart= Object.keys(field_count[field]);
     console.log(field_count);
 
     for (let name in field_count) {
@@ -61,12 +55,7 @@ export class TablesService {
       output_array.push(graph_object);
     }
     output_array.unshift(output_array.pop())
-    // this.data = [{"field":"בריאות",
-    // "5. בוטל":17,
-    // "1. בוצע כמתוכנן במקור":15,
-    // "4. מתעכב מול תכנון מקורי":35,
-    // "2. בוצע עם שינוי תכולה (מהות ו/או זמן)":12,
-    // "3. יבוצע בהמשך, בהתאם לתכנון המקורי":12}]
+
     field_chart.pop()
     graphArray = this._generateGraphArr(field_chart);
 
@@ -76,9 +65,9 @@ export class TablesService {
   _generateGraphArr(statuses:any[]){
     console.log(statuses)
     let returnVal:any[] = [];
-    const colors = ['#00BA54','#73D94F','#F8FF00','#FFC200','#FF0000'];
+    const colors = ['#39aea9','#fcd96a','#73D94F','#557b83','#fed1b7'];
 
-    for (let i=0; i<statuses.length; i++){
+    for (let i=0; i < statuses.length; i++){
       let currJsonObj = {
         "valueAxis": "v1",
         "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
@@ -102,9 +91,8 @@ export class TablesService {
   }
 
   outputChart(dataProviderArr: any[], dataGraphArr: any[]) {
-    console.log('graphs:'+ dataGraphArr[0])
-    // this.data = this.ngOnInit()
-    var chart = this.AmCharts.makeChart("chartdiv", {
+
+    const chart = {
       "type": "serial",
       "theme": "light",
       "legend": {
@@ -138,94 +126,8 @@ export class TablesService {
         "axisAlpha": 0,
         "gridAlpha": 0
       }
-    });
-
-  //   [ 
-  //     {
-  //       "valueAxis": "v1",
-  //       "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //       "fillAlphas": 0.9,
-  //       "fontSize": 11,
-  //       "labelText": "[[percents]]%",
-  //       "lineAlpha": 0.5,
-  //       "title": "1. בוצע כמתוכנן במקור",
-  //       "type": "column",
-  //       "valueField": "1. בוצע כמתוכנן במקור",
-  //       "fillColors": "#00BA54"
-  //     },
-  //     {
-  //     "valueAxis": "v1",
-  //     "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //     "fillAlphas": 0.9,
-  //     "fontSize": 11,
-  //     "labelText": "[[percents]]%",
-  //     "lineAlpha": 0.5,
-  //     "title": "2. בוצע עם שינוי תכולה (מהות ו/או זמן)",
-  //     "type": "column",
-  //     "valueField": "2. בוצע עם שינוי תכולה (מהות ו/או זמן)",
-  //     "fillColors": "#73D94F"
-  //   }, {
-  //     "valueAxis": "v1",
-  //     "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //     "fillAlphas": 0.9,
-  //     "fontSize": 11,
-  //     "labelText": "[[percents]]%",
-  //     "lineAlpha": 0.5,
-  //     "title": "3. יבוצע בהמשך, בהתאם לתכנון המקורי",
-  //     "type": "column",
-  //     "valueField": "3. יבוצע בהמשך, בהתאם לתכנון המקורי",
-  //     "fillColors": "#F8FF00"
-
-  //   },
-  //   {
-  //     "valueAxis": "v1",
-  //     "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //     "fillAlphas": 0.9,
-  //     "fontSize": 11,
-  //     "labelText": "[[percents]]%",
-  //     "lineAlpha": 0.5,
-  //     "title": "4. מתעכב מול תכנון מקורי",
-  //     "type": "column",
-  //     "valueField": "4. מתעכב מול תכנון מקורי",
-  //     "fillColors": "#FFC200"
-
-  //   },
-  //   {
-  //     "valueAxis": "v1",
-  //     "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
-  //     "fillAlphas": 0.9,
-  //     "fontSize": 11,
-  //     "labelText": "[[percents]]%",
-  //     "lineAlpha": 0.5,
-  //     "title": "5. בוטל",
-  //     "type": "column",
-  //     "valueField": "5. בוטל",
-  //     "fillColors": "#FF0000"
-  //   }
-  // ]
-
-    // ngOnDestroy() {
-    //   if (this.chart) {
-    //     this.AmCharts.destroyChart(this.chart);
-    //   }
-    // }
-
+    }
     return chart
   }
 
-  blockersChart2() {
-    return
-  }
-  executionChart1() {
-    return
-  }
-  executionChart2() {
-    return
-  }
-  executionChart3() {
-    return
-  }
-  executionChart4() {
-    return
-  }
 }

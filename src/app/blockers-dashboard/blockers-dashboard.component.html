@@ -1,4 +1,7 @@
-<h1>חסמים</h1>
-<div *ngIf="chart1">
-<bar-chart [data]="chart1"></bar-chart>
+<div class="container">
+  <h2>סטטוס חסמים למשימות</h2>
+  <div *ngIf="chart1">
+    <bar-chart [data]="chart1" [chartId]="'chart1Id'"></bar-chart>
+    <bar-chart [data]="chart2" [chartId]="'chart2Id'"></bar-chart>
+  </div>
 </div>

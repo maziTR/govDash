@@ -1,4 +1,9 @@
-<p>
-  execution-dashboard works... and here is the content of the file: <br>
-  {{this.sheets}}
-</p>
+<div class="container">
+  <h2>סטטוס ביצוע משימות</h2>
+  <div *ngIf="chart1">
+    <bar-chart [data]="chart1" [chartId]="'chartEId'"></bar-chart>
+    <bar-chart [data]="chart2" [chartId]="'chartE2Id'"></bar-chart>
+    <bar-chart [data]="chart3" [chartId]="'chartE3Id'"></bar-chart>
+    <bar-chart [data]="chart4" [chartId]="'chartE4Id'"></bar-chart>
+  </div>
+</div>

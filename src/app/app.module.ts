@@ -18,7 +18,6 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { TablesService } from './tables.service';
 import { AmChartsModule, AmChartsService } from "@amcharts/amcharts3-angular";
-import { ChartsCalculationsService } from './charts-calculations.service';
 
 @NgModule({
   declarations: [

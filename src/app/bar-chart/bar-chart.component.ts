@@ -9,7 +9,7 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 export class BarChartComponent implements OnInit, AfterViewInit{
   private chart: AmChart;
   @Input() data;
-
+  @Input() chartId:string;
   constructor(private AmCharts: AmChartsService) { }
 
   ngOnInit() {
@@ -18,10 +18,15 @@ export class BarChartComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit() {
     console.log(this.data);
-    this.chart = this.AmCharts.makeChart("chartdiv", this.data);
+    this.chart = this.AmCharts.makeChart(this.chartId, this.data);
     console.log(this.chart);
   }
 
+    ngOnDestroy() {
+      if (this.chart) {
+        this.AmCharts.destroyChart(this.chart);
+      }
+    }
 }
 
 

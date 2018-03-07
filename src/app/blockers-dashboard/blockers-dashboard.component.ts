@@ -8,8 +8,8 @@ import { TablesService } from '../tables.service';
 })
 export class BlockersDashboardComponent implements OnInit {
 
-  chart1;
-  chart2:Array<any>;
+  chart1:any;
+  chart2:any;
 
   constructor(private tableService: TablesService) { }
 
@@ -17,8 +17,8 @@ export class BlockersDashboardComponent implements OnInit {
   
     this.tableService.getTables().subscribe(
       data => {
-        console.log(data);
         this.chart1 = this.tableService.blockersChart(data,3,105);
+        this.chart2 = this.tableService.blockersChart(data,3,105);
       }
     );
   }
