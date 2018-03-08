@@ -14,13 +14,13 @@ export class BlockersDashboardComponent implements OnInit {
   constructor(private tableService: TablesService) { }
 
   ngOnInit() {
-  
     this.tableService.getTables().subscribe(
       data => {
-        this.chart1 = this.tableService.generateChart(data, [[3, 105], [3, 105], [3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
-        this.chart2 = this.tableService.generateChart(data, [[3, 105], [3, 105], [3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
+        this.chart1 = this.tableService.generateChart(data, [[3, 72], [3, 91], [3, 106]], "חסמים - המשאב העיקרי שהיה חסר לפרויקט כדי להתקדם כמתוכנן - חלוקה לתחומי על");
+        this.chart2 = this.tableService.generateChart(data, [[3, 74], [3, 92], [3, 107]], "חסמים - ממשק מרכזי שהקשה על הביצוע - בחלוקה לתחומי על");
       }
     );
+
   }
   
 }

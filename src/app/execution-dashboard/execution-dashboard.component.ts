@@ -18,9 +18,9 @@ export class ExecutionDashboardComponent implements OnInit {
   this.tableService.getTables().subscribe(
     data => {
       this.chart1 = this.tableService.generateChart(data, [[3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
-      this.chart2 = this.tableService.generateChart(data, [[3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
-      this.chart3 = this.tableService.generateChart(data, [[3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
-      this.chart4 = this.tableService.generateChart(data, [[3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
+      this.chart2 = this.tableService.generateChart(data, [[19, 105]], "סטטוס ביצוע בהתאם לתועלת הציבורית מהמשימה  - כלל המשימות");
+      this.chart3 = this.tableService.generateChart(data, [[24, 105]], "סטטוס ביצוע בהתאם לישימות המשימה - כלל המשימות");
+      // this.chart4 = this.tableService.generateChart(data, [[3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
     }
   );
   }
