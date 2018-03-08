@@ -21,6 +21,10 @@ export class PieChartComponent implements OnInit {
     this.chart = this.AmCharts.makeChart( "chartdivpie", {
       "type": "pie",
       "theme": "light",
+      "titles": [{
+        "text": "סטטוס ביצוע לכלל המשימות - סטטוס שנתי מטויב קצר",
+        "size": 20
+      }],
       "dataProvider": [ {
         "title": "1. בוצע כמתוכנן במקור",
         "value": 106
@@ -38,20 +42,25 @@ export class PieChartComponent implements OnInit {
          "value":107
         }
          ],
+      "fontFamily": "Arial, Helvetica, sans-serif",
       "titleField": "title",
       "valueField": "value",
       "labelRadius": 5,
-    
       "radius": "42%",
       "innerRadius": "60%",
       "labelText": "[[title]]",
       "export": {
         "enabled": true
       }
-    } );
+    });
+
     this.chart = this.AmCharts.makeChart( "chartdivpie2", {
       "type": "pie",
       "theme": "light",
+      "titles": [{
+        "text": "סטטוס ביצוע לכלל המשימות - סטטוס שנתי מטויב ארוך",
+        "size": 20
+      }],
       "dataProvider": [ {
         "title": "1. בוצע כמתוכנן במקור",
         "value": 106
@@ -66,10 +75,10 @@ export class PieChartComponent implements OnInit {
          "value":14
         }
          ],
+      "fontFamily": "Arial, Helvetica, sans-serif",
       "titleField": "title",
       "valueField": "value",
       "labelRadius": 5,
-    
       "radius": "42%",
       "innerRadius": "60%",
       "labelText": "[[title]]",

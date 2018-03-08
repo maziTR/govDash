@@ -118,7 +118,7 @@ export class TablesService {
         "valueAxis": "v1",
         "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
         "fillAlphas": 0.9,
-        "fontSize": 11,
+        "fontSize": 14,
         "labelText": "[[percents]]%",
         "lineAlpha": 0.5,
         "title": "",
@@ -151,7 +151,8 @@ export class TablesService {
         "markerSize": 10,
         "useGraphSettings": true,
         "valueAlign": "left",
-        "valueWidth": 0
+        "valueWidth": 0,
+        "fontSize": 14
       },
       "dataProvider": dataProviderArr,
       "valueAxes": [{
@@ -176,7 +177,8 @@ export class TablesService {
       "categoryAxis": {
         "gridPosition": "start",
         "axisAlpha": 0,
-        "gridAlpha": 0
+        "gridAlpha": 0,
+        "titleBold": true
       }
     }
     return chart;
