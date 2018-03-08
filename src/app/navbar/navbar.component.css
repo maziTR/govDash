@@ -1,5 +1,5 @@
 nav{
-    height: 2em;
+    height: 2.5em;
 }
 
 .collapse navbar-collapse {
@@ -19,6 +19,6 @@ nav{
     transition: all 0.3s 
 }
 
-fa-sign-out {
+i {
     padding-left: 10px;
 }

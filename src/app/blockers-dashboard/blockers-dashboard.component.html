@@ -1,6 +1,7 @@
-<p>
-
-  <!-- <bar-chart [data]="chart1"></bar-chart> -->
-  <bar-chart></bar-chart>
-  <pie-chart></pie-chart>
-</p>
+<div class="container">
+  <h2>סטטוס חסמים למשימות</h2>
+  <div *ngIf="chart1">
+    <bar-chart [data]="chart1" [chartId]="'chart1Id'"></bar-chart>
+    <bar-chart [data]="chart2" [chartId]="'chart2Id'"></bar-chart>
+  </div>
+</div>
