@@ -18,25 +18,5 @@ export class AppComponent implements OnInit{
   constructor(private authService: AuthService,private tableService: TablesService, public router: Router) { }
   
   ngOnInit() {
-/*     this.authService.fetchUserDetails().subscribe(
-      data => console.log(data)
-    ); */
-
- //  this.tableService.updateTables();
   }
-
-  login(){
-/*     this.tableService.getFiles().subscribe(data => {
-      this.files = data;
-      console.log(this.files);
-    }); */
-  }
-
-  // getSheets() {
-  //   console.log(this.inputText);
-  //   this.tableService.getTables(this.inputText).subscribe(data => {
-  //     this.sheets = data;
-  //     console.log(this.sheets);
-  //   })
-  // }
 }

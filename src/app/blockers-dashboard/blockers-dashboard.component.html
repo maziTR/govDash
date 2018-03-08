@@ -1,12 +1,13 @@
-<div class="container">
-  <h2>סטטוס חסמים למשימות</h2>
-<!--   <div><a href="#chart1Id" (click)="aClicked" target="_self">{{chart1Title}}</a> | <a target="_self" (click)="aClicked" href="#chart2Id">{{chart2Title}}</a></div>
- -->  <div *ngIf="!chart1" class="loader">
+<div class="container-fluid">
+  <div class="headline">סטטוס חסמים למשימות</div>
+  <div *ngIf="!chart1" class="loader">
     <div class="pacman"></div>
     <div class="dot"></div>
   </div>
-  <div *ngIf="chart1">
-    <bar-chart [data]="chart1" [chartId]="'chart1Id'"></bar-chart>
-    <bar-chart [data]="chart2" [chartId]="'chart2Id'"></bar-chart>
+  <div class="container">
+    <div *ngIf="chart1">
+      <bar-chart [data]="chart1" [chartId]="'chart1Id'"></bar-chart>
+      <bar-chart [data]="chart2" [chartId]="'chart2Id'"></bar-chart>
+    </div>
   </div>
 </div>

@@ -1,16 +1,15 @@
-.container{
+.container-fluid{
   padding-top: 8em;
 }
 
 .loader{
-  margin: 12em 0em 0em 1em;
+  margin: 12em 0em 0em 0em;
   position: absolute;
-  width: 77%;
+  width: 100%;
 }
   
-  h2 {
+.headline {
     font-size: 34px;
-    width: 85%;
     word-spacing: 5px;
     padding-top: 0.9em;
     top: 1.5em;
@@ -19,4 +18,5 @@
     background: white;
     position: fixed;
     z-index: 1;
+    width: 100%;
   }

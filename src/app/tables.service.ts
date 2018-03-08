@@ -5,9 +5,22 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 
 @Injectable()
 export class TablesService {
+  user: any;
   private rawData:any[];
 
   constructor(private http: HttpClient, private AmCharts: AmChartsService) { }
+
+  getUserRequest(): Observable<any> {
+    return this.http.get<any>('/api/userDetails');
+  }
+
+  getUser() {
+    return this.user;
+  }
+
+  setUser(user) {
+    this.user = user;
+  }
 
   getTables(): Observable<any> {
     return this.http.get<any>('/api/data');

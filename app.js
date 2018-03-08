@@ -52,7 +52,11 @@ app.get('/api/data', isLoggedIn, function (req, res) {
   });
 });
 
-app.get('/userDetails', isLoggedIn, function (req, res) {
+app.get('/api/userDetails', isLoggedIn, function (req, res) {
+  if (req.user) {
+    console.log("In req.user");
+    res.send({name: req.user.name});
+  }
   res.send(req.user);
 });
 
