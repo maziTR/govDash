@@ -18,3 +18,7 @@ nav{
     justify-content: flex-start;
     transition: all 0.3s 
 }
+
+i {
+    padding-left: 10px;
+}

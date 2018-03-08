@@ -13,57 +13,103 @@ export class TablesService {
     return this.http.get<any>('/api/data');
   }
 
-  blockersChart(data: any[], clm1: number, clm2: number) {
-
-    let sheet = data[0];
-    let output_array: any[] = [];
-    let graphArray: any[];
-    let field_count = {};
-    let field_chart = [];
-
+  _createObjectFromArray(sheet, columns) {
+    let groupedObject = {};
     for (var i = 1; i < sheet.length; i++) {
-      var field = sheet[i][clm1];
-      var status = sheet[i][clm2];
+      var field = sheet[i][columns[0]];
+      var status = sheet[i][columns[1]];
       if (status) {
-        if (field_count[field]) {
-          if (field_count[field][status]) {
-            field_count[field][status]++
+        if (groupedObject[field]) {
+          if (groupedObject[field][status]) {
+            groupedObject[field][status]++;
           }
           else {
-            field_count[field][status] = 1;
+            groupedObject[field][status] = 1;
           }
-
         } else {
-          field_count[field] = {};
-          field_count[field][status] = 1
+          groupedObject[field] = {};
+          groupedObject[field][status] = 1;
         }
       }
-      // return field_count
     }
-    console.log(field_count[field]);
-
-    field_chart= Object.keys(field_count[field]);
-    console.log(field_count);
-
-    for (let name in field_count) {
-      var graph_object = { field: name };
-      var task_details = field_count[name];
-      for (status in task_details) {
-        graph_object[status] = task_details[status];
-        
-      }
-      output_array.push(graph_object);
-    }
-    output_array.unshift(output_array.pop())
-
-    field_chart.pop()
-    graphArray = this._generateGraphArr(field_chart);
-
-    return this.outputChart(output_array, graphArray);
+    console.log("My grouped object:");
+    console.log(groupedObject);
+    return groupedObject;
   }
 
-  _generateGraphArr(statuses:any[]){
-    console.log(statuses)
+  _sumFieldCountObjects(array: any[]) {
+    // get an array of all the fields
+    let allFieldsArr = Object.keys(array[0]);
+    let sumOfFieldCount = {};
+
+    for (let i = 1; i < array.length; i++) {
+      let currObjKeys = Object.keys(array[i]);
+      for (let element of currObjKeys) {
+        if (allFieldsArr.indexOf(element) === -1) {
+          allFieldsArr.push(element);
+        }
+      }
+    }
+
+    for (let obj of array) {
+      for (let field in obj) {
+        if (sumOfFieldCount[field]) { // field already exists
+          for (let status in obj[field]) {
+            if (sumOfFieldCount[field][status]) { // status already exists
+              sumOfFieldCount[field][status] += obj[field][status];
+            } else {
+              sumOfFieldCount[field][status] = obj[field][status];
+            }
+          }
+        } else {
+          sumOfFieldCount[field] = obj[field];
+        }
+      }
+    }
+
+    console.log("sumOfFieldCount:");
+    console.log(sumOfFieldCount);
+    return sumOfFieldCount;
+  }
+
+  generateChart(data: any[], columns: any[], titleText: string) {
+    let sheet = data[0];
+    let arrOfFieldsCount: any[] = [];
+    let fieldCount = {};
+    let fieldChart = [];
+    let outputArray: any[] = [];
+    let graphArray: any[];
+
+    for (let i = 0; i < columns.length; i++) {
+      arrOfFieldsCount.push(this._createObjectFromArray(sheet, columns[i]));
+    }
+
+    // check if we need to calculate more than 2 columns
+    if (arrOfFieldsCount.length > 1) {
+      fieldCount = this._sumFieldCountObjects(arrOfFieldsCount);
+    } else {
+      fieldCount = arrOfFieldsCount[0];
+    }
+    
+    fieldChart= Object.keys(fieldCount[sheet[sheet.length - 1][columns[0][0]]]);
+    console.log(fieldCount);
+
+    for (let name in fieldCount) {
+      var graphObject = { field: name };
+      var taskDetails = fieldCount[name];
+      for (status in taskDetails) {
+        graphObject[status] = taskDetails[status];
+      }
+      outputArray.push(graphObject);
+    }
+    outputArray.unshift(outputArray.pop());
+    fieldChart.pop();
+    graphArray = this._generateGraphArr(fieldChart);
+
+    return this.outputChart(outputArray, graphArray, titleText);
+  }
+
+  _generateGraphArr(statuses:any[]) {
     let returnVal:any[] = [];
     const colors = ['#39aea9','#fcd96a','#73D94F','#557b83','#fed1b7'];
 
@@ -85,16 +131,18 @@ export class TablesService {
       currJsonObj.valueField = statuses[i];
       currJsonObj.fillColors = colors[i];
       returnVal.push(currJsonObj);
-      console.log(currJsonObj);
     }
     return returnVal;
   }
 
-  outputChart(dataProviderArr: any[], dataGraphArr: any[]) {
-
+  outputChart(dataProviderArr: any[], dataGraphArr: any[], titleText: string) {
     const chart = {
       "type": "serial",
       "theme": "light",
+      "titles": [{
+        "text": titleText,
+        "size": 20
+      }],
       "legend": {
         "autoMargins": false,
         "borderAlpha": 0.2,
@@ -115,11 +163,15 @@ export class TablesService {
         "position": "left"
       }],
       "graphs": dataGraphArr,
-      "marginTop": 30,
+      "marginTop": 60,
       "marginRight": 0,
       "marginLeft": 0,
       "marginBottom": 40,
       "autoMargins": false,
+      "export": {
+        "enabled": true
+      },
+      "fontFamily": "Arial, Helvetica, sans-serif",
       "categoryField": "field",
       "categoryAxis": {
         "gridPosition": "start",
@@ -127,7 +179,6 @@ export class TablesService {
         "gridAlpha": 0
       }
     }
-    return chart
+    return chart;
   }
-
 }
