@@ -1,15 +1,89 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Input  } from '@angular/core';
+import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
+
 
 @Component({
-  selector: 'app-pie-chart',
+  selector: 'pie-chart',
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.css']
 })
 export class PieChartComponent implements OnInit {
+  private chart: AmChart;
 
-  constructor() { }
+
+  constructor(private AmCharts: AmChartsService) { }
 
   ngOnInit() {
+    // this.ngAfterViewInit();
+    
+  }
+  ngAfterViewInit(){
+    this.chart = this.AmCharts.makeChart( "chartdivpie", {
+      "type": "pie",
+      "theme": "light",
+      "dataProvider": [ {
+        "title": "1. בוצע כמתוכנן במקור",
+        "value": 106
+      }, {
+        "title": "2. בוצע עם שינוי תכולה (מהות ו/או זמן)",
+        "value": 94
+      },
+        {"title":"3. יבוצע בהמשך, בהתאם לתכנון המקורי",
+         "value":31
+        },
+        {"title":"4. מתעכב מול תכנון מקורי",
+         "value":226
+        },
+         {"title":"5. בוטל",
+         "value":107
+        }
+         ],
+      "titleField": "title",
+      "valueField": "value",
+      "labelRadius": 5,
+    
+      "radius": "42%",
+      "innerRadius": "60%",
+      "labelText": "[[title]]",
+      "export": {
+        "enabled": true
+      }
+    } );
+    this.chart = this.AmCharts.makeChart( "chartdivpie2", {
+      "type": "pie",
+      "theme": "light",
+      "dataProvider": [ {
+        "title": "1. בוצע כמתוכנן במקור",
+        "value": 106
+      }, {
+        "title": "2. בוצע עם שינוי בזמן המשימה",
+        "value": 65
+      },
+        {"title":"3. בוצע עם שינוי במהות המשימה",
+         "value":15
+        },
+        {"title":"4. בוצע עם שינוי בזמן + מהות המשימה",
+         "value":14
+        }
+         ],
+      "titleField": "title",
+      "valueField": "value",
+      "labelRadius": 5,
+    
+      "radius": "42%",
+      "innerRadius": "60%",
+      "labelText": "[[title]]",
+      "export": {
+        "enabled": true
+      }
+    } );
+  }
+  ngOnDestroy() {
+    if (this.chart) {
+      this.AmCharts.destroyChart(this.chart);
+    }
   }
 
 }
+
+
