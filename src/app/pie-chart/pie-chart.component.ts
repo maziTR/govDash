@@ -41,7 +41,7 @@ export class PieChartComponent implements OnInit {
       "titleField": "title",
       "valueField": "value",
       "labelRadius": 5,
-    
+      "fontSize":"16",
       "radius": "42%",
       "innerRadius": "60%",
       "labelText": "[[title]]",
@@ -69,7 +69,7 @@ export class PieChartComponent implements OnInit {
       "titleField": "title",
       "valueField": "value",
       "labelRadius": 5,
-    
+      "fontSize":"16",
       "radius": "42%",
       "innerRadius": "60%",
       "labelText": "[[title]]",
