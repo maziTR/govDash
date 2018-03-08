@@ -14,9 +14,11 @@ a {
     margin-top: 60px;
 }
 
-/* a:hover {
-    cursor: pointer;
-} */
+a:hover {
+    text-decoration: none;
+    background-color: #b9c9d3;
+}
+
 
 .welcome {
     color: #3a443d;
@@ -27,13 +29,14 @@ a {
     padding-top: 150px;
     padding-bottom: 50px;
     /* font-family: "Flama Semibold"; */
-    font-size: 4vw;
+    font-size: 3vw;
     line-height: 5.25vw;
     text-transform: uppercase;
     /* letter-spacing: -.05px; */
     /* margin-bottom: 15px; */
     /* width: 840px; */
     padding-left: 30px;
+    text-transform: initial;
 }
 
 
