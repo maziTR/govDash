@@ -130,3 +130,10 @@
     animation: r-to-l 0.4s infinite;
   }
   
+  h2 {
+    padding-top: 50px;
+    font-size: 34px;
+    font-weight: 700;
+    word-spacing: 5px;
+  }
+  
