@@ -1,11 +1,7 @@
-<navbar [user]="user"></navbar>
+<navbar [user]="this.tableService.getUser()"></navbar>
 
 <div style="text-align:center">
   <div class="under-nav"></div>
-
-  <div *ngIf="user.name != ''">
-    <app-login (onButtonClick)="getUser($event)"></app-login>
-  </div>
 
   <router-outlet></router-outlet>
 

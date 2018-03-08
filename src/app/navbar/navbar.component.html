@@ -2,15 +2,19 @@
   <span class="navbar-brand">
     <i class="fa fa-bar-chart"></i> Gov Dash</span>
   <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" *ngIf="this.user">
       <li class="nav-item">
         <a class="nav-link" href="/execution">סטטוס ביצוע</a>
       </li>
+      <!-- <li>{{this.user ? this.user.name : ""}}</li> -->
       <li class="nav-item">
         <a class="nav-link" href="/blockers">חסמים</a>
       </li>
     </ul>
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" *ngIf="this.user">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Hello, {{this.user.name}}</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="/logout">Logout
           <i class="fa fa-sign-out" aria-hidden="true"></i>
