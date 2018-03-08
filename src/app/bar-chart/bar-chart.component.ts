@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Input } from '@angular/core';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
+import { TablesService } from '../tables.service';
 
 @Component({
   selector: 'bar-chart',

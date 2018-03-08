@@ -40,8 +40,8 @@ app.get('/api/google/auth', passport.authenticate('google',
 
 app.get('/api/google/auth/callback', passport.authenticate('google', {
   successRedirect: '/execution',
-  failureRedirect: '/'
-  // failureRedirect: '/login-error' - TODO - use this when we have a unauthorized page
+  // failureRedirect: '/'
+  failureRedirect: '/login-error'
 }));
 
 // get the sheets data from the users file
@@ -96,11 +96,9 @@ function isLoggedIn(req, res, next) {
   res.redirect('/');
 }
 
-// TODO - put this function to use when we have a unauthorized page
-// app.get('/login-error', (req, res) => {
-//   // TODO - make sure Shir page is in src
-//   res.sendFile(path.join(__dirname, 'src/unauthorized.html'));
-// });
+app.get('/login-error', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src/app/unauthorized.html'));
+});
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/', express.static(path.join(__dirname, 'dist')));
