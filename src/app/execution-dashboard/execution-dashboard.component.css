@@ -1,7 +1,7 @@
 .loader{
-    margin: 5em 0em 0em 1em;
-    position: absolute;
-    width: 85%;
+  margin: 10em 0em 0em 1em;
+  position: absolute;
+  width: 77%;
 }
 
 @-webkit-keyframes up {
