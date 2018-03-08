@@ -4,11 +4,10 @@
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto" *ngIf="this.user">
       <li class="nav-item">
-        <a class="nav-link" href="/execution">סטטוס ביצוע</a>
+        <a class="nav-link" routerLink="/execution">סטטוס ביצוע</a>
       </li>
-      <!-- <li>{{this.user ? this.user.name : ""}}</li> -->
       <li class="nav-item">
-        <a class="nav-link" href="/blockers">חסמים</a>
+        <a class="nav-link" routerLink="/blockers">חסמים</a>
       </li>
     </ul>
     <ul class="navbar-nav" *ngIf="this.user">
