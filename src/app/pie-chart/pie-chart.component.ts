@@ -9,8 +9,7 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 })
 export class PieChartComponent implements OnInit {
   private chart: AmChart;
-
-
+  
   constructor(private AmCharts: AmChartsService) { }
 
   ngOnInit() {
