@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { TablesService } from './tables.service';
 import { BarChartComponent } from './bar-chart/bar-chart.component'
@@ -15,7 +14,7 @@ export class AppComponent implements OnInit{
   sheets: any[] = [];
   inputText: string;
 
-  constructor(private authService: AuthService,private tableService: TablesService, public router: Router) { }
+  constructor(private tableService: TablesService, public router: Router) { }
   
   ngOnInit() {
   }

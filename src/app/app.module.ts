@@ -10,8 +10,6 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
 import { LoginComponent } from './login/login.component';
-import { AuthService } from './auth.service';
-import { AuthInterceptor } from './AuthInterceptor';
 import { ExecutionDashboardComponent } from './execution-dashboard/execution-dashboard.component';
 import { BlockersDashboardComponent } from './blockers-dashboard/blockers-dashboard.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
@@ -37,12 +35,7 @@ import { AmChartsModule, AmChartsService } from "@amcharts/amcharts3-angular";
     BrowserAnimationsModule,
     AmChartsModule
   ],
-  providers: [AuthService,TablesService,AmChartsService
-    ,
-    {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true}],
+  providers: [TablesService,AmChartsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
