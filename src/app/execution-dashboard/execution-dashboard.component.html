@@ -1,13 +1,15 @@
-<div class="container">
-  <h2>סטטוס ביצוע משימות</h2>
-  <div *ngIf="!chart1" class="loader">
+<div class="container-fluid">
+  <div class="headline">סטטוס ביצוע משימות</div>
+  <div class="loader" *ngIf="!chart1">
     <div class="pacman"></div>
     <div class="dot"></div>
   </div>
-  <div *ngIf="chart1">
-    <bar-chart [data]="chart1" [chartId]="'chartEId'"></bar-chart>
-    <bar-chart [data]="chart2" [chartId]="'chartE2Id'"></bar-chart>
-    <bar-chart [data]="chart3" [chartId]="'chartE3Id'"></bar-chart>
-    <pie-chart></pie-chart>
+  <div class="container">
+    <div *ngIf="chart1">
+      <bar-chart [data]="chart1" [chartId]="'chartEId'"></bar-chart>
+      <bar-chart [data]="chart2" [chartId]="'chartE2Id'"></bar-chart>
+      <bar-chart [data]="chart3" [chartId]="'chartE3Id'"></bar-chart>
+      <pie-chart></pie-chart>
+    </div>
   </div>
 </div>

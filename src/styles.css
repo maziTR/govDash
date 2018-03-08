@@ -9,7 +9,5 @@ body {
     padding: 0;
     box-sizing: border-box;
     background: url('background2.jpg') no-repeat center center fixed;
-    /* background: rgb(38, 38, 38); */
-/*     background: url('https://dcrazed.com/html/bent-demo/images/home.jpg') no-repeat center center fixed;
- */    background-size: cover;
+    background-size: 80%;
 }
