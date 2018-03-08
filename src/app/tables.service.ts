@@ -111,7 +111,7 @@ export class TablesService {
 
   _generateGraphArr(statuses:any[]) {
     let returnVal:any[] = [];
-    const colors = ['#39aea9','#fcd96a','#73D94F','#557b83','#fed1b7'];
+    const colors = ['#39aea9','#fcd96a','#73D94F','#de3838','#fed1b7'];
 
     for (let i=0; i < statuses.length; i++){
       let currJsonObj = {
@@ -183,4 +183,5 @@ export class TablesService {
     }
     return chart;
   }
+
 }
