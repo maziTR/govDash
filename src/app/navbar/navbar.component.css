@@ -11,12 +11,14 @@ nav{
     text-align: right;
     height: 5.7rem;
     letter-spacing: 0.1rem;
-    color: rgb(179, 179, 179);
+    color: #e0d9d9;
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: start;
     justify-content: flex-start;
-    transition: all 0.3s 
+    transition: all 0.3s;
+    font-size: 18px;
+
 }
 
 i {
