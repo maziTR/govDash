@@ -9,6 +9,10 @@ export class TablesService {
 
   constructor(private http: HttpClient, private AmCharts: AmChartsService) { }
 
+  getUser(): Observable<any> {
+    return this.http.get<any>('/api/userDetails');
+  }
+
   getTables(): Observable<any> {
     return this.http.get<any>('/api/data');
   }

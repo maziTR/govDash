@@ -1,6 +1,7 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var User = require('../mongoose-model/user');
+var App = require('../mongoose-model/app_model');
 var configAuth = require('./auth');
 
 var google = require('googleapis');
