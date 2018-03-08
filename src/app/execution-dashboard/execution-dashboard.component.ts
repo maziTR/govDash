@@ -4,7 +4,7 @@ import { TablesService } from '../tables.service';
 @Component({
   selector: 'app-execution-dashboard',
   templateUrl: './execution-dashboard.component.html',
-  styleUrls: ['./execution-dashboard.component.css']
+  styleUrls: ['./execution-dashboard.component.css', '../loader.css']
 })
 export class ExecutionDashboardComponent implements OnInit {
   chart1:any;

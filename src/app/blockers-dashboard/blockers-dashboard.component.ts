@@ -4,7 +4,7 @@ import { TablesService } from '../tables.service';
 @Component({
   selector: 'app-blockers-dashboard',
   templateUrl: './blockers-dashboard.component.html',
-  styleUrls: ['./blockers-dashboard.component.css']
+  styleUrls: ['./blockers-dashboard.component.css', '../loader.css']
 })
 export class BlockersDashboardComponent implements OnInit {
 
