@@ -43,6 +43,7 @@ export class PieChartComponent implements OnInit {
         }
          ],
       "fontFamily": "Arial, Helvetica, sans-serif",
+      "fontSize": 16,
       "titleField": "title",
       "valueField": "value",
       "labelRadius": 5,
@@ -76,6 +77,7 @@ export class PieChartComponent implements OnInit {
         }
          ],
       "fontFamily": "Arial, Helvetica, sans-serif",
+      "fontSize": 16,
       "titleField": "title",
       "valueField": "value",
       "labelRadius": 5,

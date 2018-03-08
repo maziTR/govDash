@@ -14,17 +14,17 @@ export class AppComponent implements OnInit{
   files: any[] = [];
   sheets: any[] = [];
   inputText: string;
-  user: {} = {};
+  user: {};
 
   constructor(private authService: AuthService,private tableService: TablesService, public router: Router) { }
   
   ngOnInit() {
+    this.user = {name: ""};
   }
 
   getUser() {
     this.tableService.getUser().subscribe(data => {
       this.user = data;
-      console.log(this.user);
-      });
+    });
   }
 }

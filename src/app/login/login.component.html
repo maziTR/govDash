@@ -1,27 +1,10 @@
-<!-- <form > -->
-  <!-- <fieldset>
-      <legend>Login</legend>
-      <span class="err"></span>
-      <div class="form-field">
-          <label>Email:</label>
-          <input [(ngModel)]="user.username" name="username">
-      </div>
-      <div class="form-field">
-          <label>Password:</label>
-          <input [(ngModel)]="user.password" type="password" name="password">
-      </div>
-  </fieldset> -->
-  <!-- <div class="form-buttons"> -->
-      <span class="welcome">
-            <i class="fa fa-bar-chart welcome"></i>
-          Welcome to Gov Dash
-        </span>
-        <div>
-      <a href="/api/google/auth">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png" height="38" width="38">
-        Sign In with Google
+<span class="welcome">
+    <i class="fa fa-bar-chart welcome"></i>
+    Welcome to Gov Dash
+</span>
+<div>
+    <a href="/api/google/auth" (click)="handleClick()">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png"
+            height="38" width="38"> Sign In with Google
     </a>
 </div>
-      <!-- <button class="button button-primary" type="button" (click)="login()">Login</button> -->
-  <!-- </div> -->
-<!-- </form> -->
