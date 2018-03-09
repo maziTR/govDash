@@ -57,7 +57,7 @@ app.get('/api/userDetails', isLoggedIn, function (req, res) {
     console.log("In req.user");
     res.send({name: req.user.name});
   }
-  res.send(req.user);
+  next();
 });
 
 function getSheetsData(auth, id, callback) {
@@ -126,7 +126,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.json({ error: err });
+  res.end({ error: err });
 });
 
 module.exports = app;

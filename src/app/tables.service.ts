@@ -6,7 +6,7 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 @Injectable()
 export class TablesService {
   user: any;
-  private rawData:any[];
+  private rawData: any[];
 
   constructor(private http: HttpClient, private AmCharts: AmChartsService) { }
 
@@ -103,8 +103,8 @@ export class TablesService {
     } else {
       fieldCount = arrOfFieldsCount[0];
     }
-    
-    fieldChart= Object.keys(fieldCount[sheet[sheet.length - 1][columns[0][0]]]);
+
+    fieldChart = Object.keys(fieldCount[sheet[sheet.length - 1][columns[0][0]]]);
     console.log(fieldCount);
 
     for (let name in fieldCount) {
@@ -122,14 +122,14 @@ export class TablesService {
     return this.outputChart(outputArray, graphArray, titleText);
   }
 
-  _generateGraphArr(statuses:any[]) {
-    let returnVal:any[] = [];
-    const colors = ['#39aea9','#fcd96a','#73D94F','#de3838','#fed1b7'];
+  _generateGraphArr(statuses: any[]) {
+    let returnVal: any[] = [];
+    const colors = ['#39aea9', '#fcd96a', '#73D94F', '#de3838', '#fed1b7'];
 
-    for (let i=0; i < statuses.length; i++){
+    for (let i = 0; i < statuses.length; i++) {
       let currJsonObj = {
         "valueAxis": "v1",
-        "balloonText": "[[title]], [[category]]<br><span style='font-size:14px;'><b>[[value]]</b> ([[percents]]%)</span>",
+        "balloonText": "<span dir='rtl' style='font-size:14px;'>[[title]], [[category]]<br><b>[[value]]</b> ([[percents]]%)</span>",
         "fillAlphas": 0.9,
         "fontSize": 14,
         "labelText": "[[percents]]%",
@@ -139,7 +139,7 @@ export class TablesService {
         "valueField": "",
         "fillColors": ""
       }
-      
+
       currJsonObj.title = statuses[i];
       currJsonObj.valueField = statuses[i];
       currJsonObj.fillColors = colors[i];
@@ -191,7 +191,11 @@ export class TablesService {
         "gridPosition": "start",
         "axisAlpha": 0,
         "gridAlpha": 0,
-        "titleBold": true
+        "boldLabels": true,
+        "fontSize": 13
+      },
+      "responsive": {
+        "enabled": true
       }
     }
     return chart;
