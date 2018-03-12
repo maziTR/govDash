@@ -9,11 +9,13 @@ var google = require('googleapis');
 // const clientID = configAuth.googleAuth.clientID;
 // const clientSecret = configAuth.googleAuth.clientSecret;
 // const callbackURL = configAuth.googleAuth.callbackURL;
+const clientID = '834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com';
+const clientSecret = 'z51bBjQNgS2__hu2X8rxx6oD';
+const callbackURL = 'http://gov-dash.herokuapp.com/api/google/auth/callback';
 
 var OAuth2 = google.auth.OAuth2;
 // var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
-var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
-'z51bBjQNgS2__hu2X8rxx6oD', 'http://gov-dash.herokuapp.com/api/google/auth/callback');
+var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
 
 module.exports = function (passport) {
     // used to serialize the user for the session
