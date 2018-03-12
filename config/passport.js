@@ -13,7 +13,7 @@ var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 // var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
 var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
-'z51bBjQNgS2__hu2X8rxx6oD', 'http://localhost:3000/api/google/auth/callback');
+'z51bBjQNgS2__hu2X8rxx6oD', 'http://gov-dash.herokuapp.com/api/google/auth/callback');
 
 module.exports = function (passport) {
     // used to serialize the user for the session
