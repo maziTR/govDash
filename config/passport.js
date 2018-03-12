@@ -2,16 +2,18 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var User = require('../mongoose-model/user');
 var App = require('../mongoose-model/app_model');
-var configAuth = require('./auth');
+// var configAuth = require('./auth');
 
 var google = require('googleapis');
 
-const clientID = configAuth.googleAuth.clientID;
-const clientSecret = configAuth.googleAuth.clientSecret;
-const callbackURL = configAuth.googleAuth.callbackURL;
+// const clientID = configAuth.googleAuth.clientID;
+// const clientSecret = configAuth.googleAuth.clientSecret;
+// const callbackURL = configAuth.googleAuth.callbackURL;
 
 var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
+// var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
+var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
+'z51bBjQNgS2__hu2X8rxx6oD', 'http://localhost:3000/api/google/auth/callback');
 
 module.exports = function (passport) {
     // used to serialize the user for the session
