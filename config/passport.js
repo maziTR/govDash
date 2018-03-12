@@ -9,6 +9,7 @@ var google = require('googleapis');
 // const clientID = configAuth.googleAuth.clientID;
 // const clientSecret = configAuth.googleAuth.clientSecret;
 // const callbackURL = configAuth.googleAuth.callbackURL;
+
 const clientID = '834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com';
 const clientSecret = 'z51bBjQNgS2__hu2X8rxx6oD';
 
@@ -17,16 +18,13 @@ const clientSecret = 'z51bBjQNgS2__hu2X8rxx6oD';
 const callbackURL = 'http://localhost:3000/api/google/auth/callback';
 
 var OAuth2 = google.auth.OAuth2;
-// var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
 var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
 
 module.exports = function (passport) {
-    // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
 
-    // used to deserialize the user
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
             done(err, user);
