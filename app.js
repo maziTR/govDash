@@ -106,6 +106,15 @@ app.get('/login-error', (req, res) => {
   res.sendFile(path.join(__dirname, 'src/app/unauthorized.html'));
 });
 
+// google verification file
+// app.get('/googleb6d3e7d033f4c832.html', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'dist/googleb6d3e7d033f4c832.html'));
+// });
+
+app.get('/privacy', function (req, res) {
+  res.sendFile(path.join(__dirname, 'dist/privacypolicy.html'));
+});
+
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/', express.static(path.join(__dirname, 'dist')));
 
