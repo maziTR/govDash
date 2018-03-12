@@ -14,7 +14,7 @@ export class AppComponent implements OnInit{
   sheets: any[] = [];
   inputText: string;
 
-  constructor(private tableService: TablesService, public router: Router) { }
+  constructor(public tableService: TablesService, public router: Router) { }
   
   ngOnInit() {
   }
