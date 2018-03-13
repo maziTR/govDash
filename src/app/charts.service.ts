@@ -9,8 +9,16 @@ export class ChartsService {
 
   constructor(private http: HttpClient, private AmCharts: AmChartsService) { }
 
-  getTables(): Observable<any> {
+  getTablesRequest(): Observable<any> {
     return this.http.get<any>('/api/data');
+  }
+
+  getTables(): any[] {
+    return this.rawData;
+  }
+
+  setTables(data) {
+    this.rawData = data;
   }
 
   generateChart(data: any[], columns: any[], titleText: string) {

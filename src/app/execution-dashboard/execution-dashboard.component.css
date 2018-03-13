@@ -1,5 +1,9 @@
 .container-fluid{
-  padding-top: 8em;
+  /* padding-top: 8em; */
+}
+
+.container {
+  margin-top: 11px;
 }
 
 .loader{
@@ -16,7 +20,7 @@
   height: 2.7em;
   border-radius: 0.5em;
   background: white;
-  position: fixed;
+  position: sticky;
   z-index: 1;
   width: 100%;
 }

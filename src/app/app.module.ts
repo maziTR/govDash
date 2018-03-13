@@ -17,6 +17,7 @@ import { ExecutionDashboardComponent } from './execution-dashboard/execution-das
 import { BlockersDashboardComponent } from './blockers-dashboard/blockers-dashboard.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     ExecutionDashboardComponent,
     BlockersDashboardComponent,
     PieChartComponent,
-    BarChartComponent
+    BarChartComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,11 +1,11 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="chart1">
   <div class="headline">סטטוס חסמים למשימות</div>
-  <div *ngIf="!chart1" class="loader">
+  <!-- <div *ngIf="!chart1" class="loader">
     <div class="pacman"></div>
     <div class="dot"></div>
-  </div>
+  </div> -->
   <div class="container">
-    <div *ngIf="chart1">
+    <div>
       <bar-chart [data]="chart1" [chartId]="'chart1Id'"></bar-chart>
       <bar-chart [data]="chart2" [chartId]="'chart2Id'"></bar-chart>
     </div>
