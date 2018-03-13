@@ -33,7 +33,7 @@ export class ChartsService {
     }
 
     fieldChart = Object.keys(fieldCount[sheet[sheet.length - 1][columns[0][0]]]);
-    console.log(fieldCount);
+    // console.log(fieldCount);
 
     for (let name in fieldCount) {
       var graphObject = { field: name };
@@ -46,6 +46,13 @@ export class ChartsService {
     outputArray.unshift(outputArray.pop());
     fieldChart.pop();
     graphArray = this._generateGraphArr(fieldChart);
+    
+    // TODO - play with sorting function
+    outputArray.sort(function(a, b) {
+      return a.field - b.field;
+    })
+
+    console.log(outputArray);
 
     return this._outputChart(outputArray, graphArray, titleText);
   }
