@@ -27,7 +27,7 @@ var app = express();
 
 mongoose.connect(process.env.CONNECTION_STRING || 'mongodb://localhost/configDB');
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport);
 
 app.use(logger('dev'));
 app.use(cookieParser());
@@ -41,6 +41,7 @@ app.use(expressSession({ secret: 'ilovecatsanddogstoo', resave: false, saveUnini
 app.use(passport.initialize());
 app.use(passport.session());
 
+// routes for google authentication
 app.get('/api/google/auth', passport.authenticate('google',
   { scope: ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/plus.login'], accessType: 'offline' }));
 
@@ -52,19 +53,22 @@ app.get('/api/google/auth/callback', passport.authenticate('google', {
 // get the sheets data from the users file
 app.get('/api/data', isLoggedIn, function (req, res) {
   oauth2Client.credentials = { access_token: req.user.accessToken, refresh_token: req.user.refreshToken };
-  getSheetsData(oauth2Client, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg", function (data) {
+  _getSheetsData(oauth2Client, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg", function (data) {
     res.send(JSON.stringify(data));
   });
 });
 
-app.get('/api/userDetails', isLoggedIn, function (req, res) {
-  if (req.user) {
-    res.send({name: req.user.name});
-  }
-  next();
-});
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+    return next();
+  // if they aren't redirect them to the login page
+  res.redirect('/');
+}
 
-function getSheetsData(auth, id, callback) {
+// helper function to get the sheets data from the users file
+function _getSheetsData(auth, id, callback) {
   var sheets = google.sheets('v4');
   var sheetsResult = [];
   sheets.spreadsheets.values.batchGet({
@@ -88,20 +92,19 @@ function getSheetsData(auth, id, callback) {
   });
 }
 
+// get user details (user name) from cookie
+app.get('/api/userDetails', isLoggedIn, function (req, res) {
+  if (req.user) {
+    res.send({name: req.user.name});
+  }
+  next();
+});
+
 // route for logging out
 app.get('/logout', isLoggedIn, function (req, res) {
   req.logout();
   res.redirect('/');
 });
-
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
-  // if user is authenticated in the session, carry on
-  if (req.isAuthenticated())
-    return next();
-  // if they aren't redirect them to the login page
-  res.redirect('/');
-}
 
 // route for unauthorized user
 app.get('/login-error', function (req, res) {

@@ -7,11 +7,7 @@ import { UserService } from './user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  title = 'app';
-  files: any[] = [];
-  sheets: any[] = [];
-  inputText: string;
+export class AppComponent implements OnInit {
 
   constructor(public userService: UserService, public router: Router) { }
   
