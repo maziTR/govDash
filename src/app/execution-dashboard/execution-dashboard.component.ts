@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TablesService } from '../tables.service';
+import { ChartsService } from '../charts.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-execution-dashboard',
@@ -12,22 +13,21 @@ export class ExecutionDashboardComponent implements OnInit {
   chart3: any;
   user: {name: string};
 
-  constructor(private tableService: TablesService) { }
+  constructor(private chartsService: ChartsService, private userService: UserService) { }
 
   ngOnInit() {
     this.user = {name: ""};
-    this.tableService.getTables().subscribe(
+    this.chartsService.getTables().subscribe(
       data => {
-        this.chart1 = this.tableService.generateChart(data, [[3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
-        this.chart2 = this.tableService.generateChart(data, [[19, 105]], "סטטוס ביצוע בהתאם לתועלת הציבורית מהמשימה  - כלל המשימות");
-        this.chart3 = this.tableService.generateChart(data, [[24, 105]], "סטטוס ביצוע בהתאם לישימות המשימה - כלל המשימות");
+        this.chart1 = this.chartsService.generateChart(data, [[3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
+        this.chart2 = this.chartsService.generateChart(data, [[19, 105]], "סטטוס ביצוע בהתאם לתועלת הציבורית מהמשימה  - כלל המשימות");
+        this.chart3 = this.chartsService.generateChart(data, [[24, 105]], "סטטוס ביצוע בהתאם לישימות המשימה - כלל המשימות");
       }
     );
 
-    this.tableService.getUserRequest().subscribe(data => {
+    this.userService.getUserRequest().subscribe(data => {
       this.user = data;
-      this.tableService.setUser(this.user);
-      localStorage.setItem('name', this.user.name);
+      this.userService.setUser(this.user);
     });
   }
 }

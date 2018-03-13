@@ -16,14 +16,18 @@ var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 // var oauth2Client = new OAuth2(configAuth.googleAuth.clientID, configAuth.googleAuth.clientSecret,
 //   configAuth.googleAuth.callbackURL);
+
+// use first line in prod, and second line in dev
+// var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
+// 'z51bBjQNgS2__hu2X8rxx6oD', 'http://gov-dash.herokuapp.com/api/google/auth/callback');
 var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
-'z51bBjQNgS2__hu2X8rxx6oD', 'http://gov-dash.herokuapp.com/api/google/auth/callback' || 'http://localhost:3000/api/google/auth/callback');
+'z51bBjQNgS2__hu2X8rxx6oD', 'http://localhost:3000/api/google/auth/callback');
 
 var app = express();
 
 mongoose.connect(process.env.CONNECTION_STRING || 'mongodb://localhost/configDB');
 
-require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport);
 
 app.use(logger('dev'));
 app.use(cookieParser());
@@ -37,32 +41,34 @@ app.use(expressSession({ secret: 'ilovecatsanddogstoo', resave: false, saveUnini
 app.use(passport.initialize());
 app.use(passport.session());
 
+// routes for google authentication
 app.get('/api/google/auth', passport.authenticate('google',
   { scope: ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/plus.login'], accessType: 'offline' }));
 
 app.get('/api/google/auth/callback', passport.authenticate('google', {
   successRedirect: '/execution',
-  // failureRedirect: '/'
   failureRedirect: '/login-error'
 }));
 
 // get the sheets data from the users file
 app.get('/api/data', isLoggedIn, function (req, res) {
   oauth2Client.credentials = { access_token: req.user.accessToken, refresh_token: req.user.refreshToken };
-  getSheetsData(oauth2Client, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg", function (data) {
+  _getSheetsData(oauth2Client, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg", function (data) {
     res.send(JSON.stringify(data));
   });
 });
 
-app.get('/api/userDetails', isLoggedIn, function (req, res) {
-  if (req.user) {
-    console.log("In req.user");
-    res.send({name: req.user.name});
-  }
-  next();
-});
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+    return next();
+  // if they aren't redirect them to the login page
+  res.redirect('/');
+}
 
-function getSheetsData(auth, id, callback) {
+// helper function to get the sheets data from the users file
+function _getSheetsData(auth, id, callback) {
   var sheets = google.sheets('v4');
   var sheetsResult = [];
   sheets.spreadsheets.values.batchGet({
@@ -86,24 +92,28 @@ function getSheetsData(auth, id, callback) {
   });
 }
 
+// get user details (user name) from cookie
+app.get('/api/userDetails', isLoggedIn, function (req, res) {
+  if (req.user) {
+    res.send({name: req.user.name});
+  }
+  next();
+});
+
 // route for logging out
 app.get('/logout', isLoggedIn, function (req, res) {
   req.logout();
-  // res.send('Logged out!');
   res.redirect('/');
 });
 
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
-  // if user is authenticated in the session, carry on
-  if (req.isAuthenticated())
-    return next();
-  // if they aren't redirect them to the login page
-  res.redirect('/');
-}
-
-app.get('/login-error', (req, res) => {
+// route for unauthorized user
+app.get('/login-error', function (req, res) {
   res.sendFile(path.join(__dirname, 'src/app/unauthorized.html'));
+});
+
+// privacy policy route - might be removed later
+app.get('/privacy', function (req, res) {
+  res.sendFile(path.join(__dirname, 'src/privacypolicy.html'));
 });
 
 app.use(express.static(path.join(__dirname, 'dist')));
