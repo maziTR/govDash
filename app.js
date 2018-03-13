@@ -46,7 +46,6 @@ app.get('/api/google/auth', passport.authenticate('google',
 
 app.get('/api/google/auth/callback', passport.authenticate('google', {
   successRedirect: '/execution',
-  // failureRedirect: '/'
   failureRedirect: '/login-error'
 }));
 
@@ -60,7 +59,6 @@ app.get('/api/data', isLoggedIn, function (req, res) {
 
 app.get('/api/userDetails', isLoggedIn, function (req, res) {
   if (req.user) {
-    console.log("In req.user");
     res.send({name: req.user.name});
   }
   next();
@@ -93,7 +91,6 @@ function getSheetsData(auth, id, callback) {
 // route for logging out
 app.get('/logout', isLoggedIn, function (req, res) {
   req.logout();
-  // res.send('Logged out!');
   res.redirect('/');
 });
 
@@ -106,12 +103,14 @@ function isLoggedIn(req, res, next) {
   res.redirect('/');
 }
 
-app.get('/login-error', (req, res) => {
+// route for unauthorized user
+app.get('/login-error', function (req, res) {
   res.sendFile(path.join(__dirname, 'src/app/unauthorized.html'));
 });
 
+// privacy policy route - might be removed later
 app.get('/privacy', function (req, res) {
-  res.sendFile(path.join(__dirname, 'dist/privacypolicy.html'));
+  res.sendFile(path.join(__dirname, 'src/privacypolicy.html'));
 });
 
 app.use(express.static(path.join(__dirname, 'dist')));
