@@ -4,85 +4,13 @@ import { Observable } from 'rxjs/Observable';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
 
 @Injectable()
-export class TablesService {
-  user: any;
+export class ChartsService {
   private rawData: any[];
 
   constructor(private http: HttpClient, private AmCharts: AmChartsService) { }
 
-  getUserRequest(): Observable<any> {
-    return this.http.get<any>('/api/userDetails');
-  }
-
-  getUser() {
-    return this.user;
-  }
-
-  setUser(user) {
-    this.user = user;
-  }
-
   getTables(): Observable<any> {
     return this.http.get<any>('/api/data');
-  }
-
-  _createObjectFromArray(sheet, columns) {
-    let groupedObject = {};
-    for (var i = 1; i < sheet.length; i++) {
-      var field = sheet[i][columns[0]];
-      var status = sheet[i][columns[1]];
-      if (status) {
-        if (groupedObject[field]) {
-          if (groupedObject[field][status]) {
-            groupedObject[field][status]++;
-          }
-          else {
-            groupedObject[field][status] = 1;
-          }
-        } else {
-          groupedObject[field] = {};
-          groupedObject[field][status] = 1;
-        }
-      }
-    }
-    console.log("My grouped object:");
-    console.log(groupedObject);
-    return groupedObject;
-  }
-
-  _sumFieldCountObjects(array: any[]) {
-    // get an array of all the fields
-    let allFieldsArr = Object.keys(array[0]);
-    let sumOfFieldCount = {};
-
-    for (let i = 1; i < array.length; i++) {
-      let currObjKeys = Object.keys(array[i]);
-      for (let element of currObjKeys) {
-        if (allFieldsArr.indexOf(element) === -1) {
-          allFieldsArr.push(element);
-        }
-      }
-    }
-
-    for (let obj of array) {
-      for (let field in obj) {
-        if (sumOfFieldCount[field]) { // field already exists
-          for (let status in obj[field]) {
-            if (sumOfFieldCount[field][status]) { // status already exists
-              sumOfFieldCount[field][status] += obj[field][status];
-            } else {
-              sumOfFieldCount[field][status] = obj[field][status];
-            }
-          }
-        } else {
-          sumOfFieldCount[field] = obj[field];
-        }
-      }
-    }
-
-    console.log("sumOfFieldCount:");
-    console.log(sumOfFieldCount);
-    return sumOfFieldCount;
   }
 
   generateChart(data: any[], columns: any[], titleText: string) {
@@ -119,10 +47,64 @@ export class TablesService {
     fieldChart.pop();
     graphArray = this._generateGraphArr(fieldChart);
 
-    return this.outputChart(outputArray, graphArray, titleText);
+    return this._outputChart(outputArray, graphArray, titleText);
   }
 
-  _generateGraphArr(statuses: any[]) {
+  private _createObjectFromArray(sheet, columns) {
+    let groupedObject = {};
+    for (var i = 1; i < sheet.length; i++) {
+      var field = sheet[i][columns[0]];
+      var status = sheet[i][columns[1]];
+      if (status) {
+        if (groupedObject[field]) {
+          if (groupedObject[field][status]) {
+            groupedObject[field][status]++;
+          }
+          else {
+            groupedObject[field][status] = 1;
+          }
+        } else {
+          groupedObject[field] = {};
+          groupedObject[field][status] = 1;
+        }
+      }
+    }
+    return groupedObject;
+  }
+
+  private _sumFieldCountObjects(array: any[]) {
+    // get an array of all the fields
+    let allFieldsArr = Object.keys(array[0]);
+    let sumOfFieldCount = {};
+
+    for (let i = 1; i < array.length; i++) {
+      let currObjKeys = Object.keys(array[i]);
+      for (let element of currObjKeys) {
+        if (allFieldsArr.indexOf(element) === -1) {
+          allFieldsArr.push(element);
+        }
+      }
+    }
+
+    for (let obj of array) {
+      for (let field in obj) {
+        if (sumOfFieldCount[field]) { // field already exists
+          for (let status in obj[field]) {
+            if (sumOfFieldCount[field][status]) { // status already exists
+              sumOfFieldCount[field][status] += obj[field][status];
+            } else {
+              sumOfFieldCount[field][status] = obj[field][status];
+            }
+          }
+        } else {
+          sumOfFieldCount[field] = obj[field];
+        }
+      }
+    }
+    return sumOfFieldCount;
+  }
+
+  private _generateGraphArr(statuses: any[]) {
     let returnVal: any[] = [];
     const colors = ['#39aea9', '#fcd96a', '#73D94F', '#de3838', '#fed1b7'];
 
@@ -148,7 +130,7 @@ export class TablesService {
     return returnVal;
   }
 
-  outputChart(dataProviderArr: any[], dataGraphArr: any[], titleText: string) {
+  private _outputChart(dataProviderArr: any[], dataGraphArr: any[], titleText: string) {
     const chart = {
       "type": "serial",
       "theme": "light",
@@ -200,5 +182,4 @@ export class TablesService {
     }
     return chart;
   }
-
 }
