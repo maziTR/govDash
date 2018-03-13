@@ -8,20 +8,26 @@ import { UserService } from '../user.service';
   styleUrls: ['./execution-dashboard.component.css', '../loader.css']
 })
 export class ExecutionDashboardComponent implements OnInit {
-  chart1: any;
-  chart2: any;
-  chart3: any;
+  chart: any;
   user: {name: string};
+  filterOptions: Array<{column: number, optionName: string}>;
+  selected: number;
+  sheetsArray: any[];
 
   constructor(private chartsService: ChartsService, private userService: UserService) { }
 
   ngOnInit() {
+    let options = ['תחום-על', 'סגן מוביל במטה', 'התועלת הציבורית מהמשימה', 'ישימות המשימה באחוזים', 
+      'מעורבות מנכ"ל שוויון חברתי'];
     this.user = {name: ""};
+
     this.chartsService.getTables().subscribe(
       data => {
-        this.chart1 = this.chartsService.generateChart(data, [[3, 105]], "סטטוס הביצוע בחלוקה לתחומי על - כלל המשימות");
-        this.chart2 = this.chartsService.generateChart(data, [[19, 105]], "סטטוס ביצוע בהתאם לתועלת הציבורית מהמשימה  - כלל המשימות");
-        this.chart3 = this.chartsService.generateChart(data, [[24, 105]], "סטטוס ביצוע בהתאם לישימות המשימה - כלל המשימות");
+        this.sheetsArray = data;
+        this.filterOptions = this.chartsService.createFilter(data, options);
+        this.selected = 0;
+        this.chart = this.chartsService.generateChart(data, [[this.filterOptions[0].column, 105]], 
+          `סטטוס הביצוע של כלל המשימות חלוקה לפי ${this.filterOptions[0].optionName}`);
       }
     );
 
@@ -29,5 +35,11 @@ export class ExecutionDashboardComponent implements OnInit {
       this.user = data;
       this.userService.setUser(this.user);
     });
+  }
+
+  updateChart() {
+    let selectedOption = this.filterOptions[this.selected];
+    this.chart = this.chartsService.generateChart(this.sheetsArray, [[selectedOption.column, 105]], 
+          `סטטוס הביצוע של כלל המשימות - לפי ${selectedOption.optionName}`);
   }
 }

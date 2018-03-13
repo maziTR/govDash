@@ -47,14 +47,23 @@ export class ChartsService {
     fieldChart.pop();
     graphArray = this._generateGraphArr(fieldChart);
     
-    // TODO - play with sorting function
+    // sort the fields (x axis) of the bar chart
     outputArray.sort(function(a, b) {
-      return a.field - b.field;
-    })
-
-    console.log(outputArray);
+      if (parseInt(a.field)) {
+        return parseInt(a.field) - parseInt(b.field);
+      }
+      return a.field.localeCompare(b.field);
+    });
 
     return this._outputChart(outputArray, graphArray, titleText);
+  }
+
+  createFilter(dataArr: any[], filterFieldsArr: any[]) {
+    let firstRowValues = dataArr[0][0];
+    return filterFieldsArr.map(element => {
+      let i = firstRowValues.indexOf(element);
+      return {column: i, optionName: element};
+    });
   }
 
   private _createObjectFromArray(sheet, columns) {
