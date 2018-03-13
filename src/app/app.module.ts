@@ -14,8 +14,9 @@ import { ExecutionDashboardComponent } from './execution-dashboard/execution-das
 import { BlockersDashboardComponent } from './blockers-dashboard/blockers-dashboard.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
-import { TablesService } from './tables.service';
+import { ChartsService } from './charts.service';
 import { AmChartsModule, AmChartsService } from "@amcharts/amcharts3-angular";
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { AmChartsModule, AmChartsService } from "@amcharts/amcharts3-angular";
     BrowserAnimationsModule,
     AmChartsModule
   ],
-  providers: [TablesService,AmChartsService],
+  providers: [ChartsService, AmChartsService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
