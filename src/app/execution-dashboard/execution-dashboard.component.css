@@ -1,5 +1,5 @@
 .container-fluid{
-  padding-top: 8em;
+  /* padding-top: 8em; */
 }
 
 .loader{
@@ -9,14 +9,18 @@
 }
   
 .headline {
-    font-size: 34px;
-    word-spacing: 5px;
-    padding-top: 0.9em;
-    top: 1.5em;
-    height: 2.7em;
-    border-radius: 0.5em;
-    background: white;
-    position: fixed;
-    z-index: 1;
-    width: 100%;
-  }
+  font-size: 34px;
+  word-spacing: 5px;
+  padding-top: 0.9em;
+  top: 1.5em;
+  height: 2.7em;
+  border-radius: 0.5em;
+  background: white;
+  position: sticky;
+  z-index: 1;
+  width: 100%;
+}
+
+.filter {
+  direction: rtl;
+}

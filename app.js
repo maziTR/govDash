@@ -46,7 +46,7 @@ app.get('/api/google/auth', passport.authenticate('google',
   { scope: ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/plus.login'], accessType: 'offline' }));
 
 app.get('/api/google/auth/callback', passport.authenticate('google', {
-  successRedirect: '/execution',
+  successRedirect: '/home',
   failureRedirect: '/login-error'
 }));
 

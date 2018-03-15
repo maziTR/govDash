@@ -1,12 +1,12 @@
-.container-fluid{
-  padding-top: 8em;
+.container-fluid {
+  /* padding-top: 8em; */
 }
 
-.loader{
+/* .loader {
   margin: 12em 0em 0em 0em;
   position: absolute;
   width: 100%;
-}
+} */
 
 .headline {
   font-size: 34px;
@@ -16,7 +16,7 @@
   height: 2.7em;
   border-radius: 0.5em;
   background: white;
-  position: fixed;
+  position: sticky;
   z-index: 1;
   width: 100%;
 }
