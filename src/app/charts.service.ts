@@ -63,6 +63,9 @@ export class ChartsService {
       return a.field.localeCompare(b.field);
     });
 
+    // Pie generator only for debug
+    this.generatePie(data, [105,105], titleText)
+
     return this._outputChart(outputArray, graphArray, titleText);
   }
 
@@ -91,6 +94,24 @@ export class ChartsService {
           groupedObject[field] = {};
           groupedObject[field][status] = 1;
         }
+      }
+    }
+    return groupedObject;
+  }
+
+  // generate object for pie chart 
+  private _createObjectPieFromArray(sheet, columns) {
+    let groupedObject = {};
+    for (var i = 1; i < sheet.length; i++) {
+      var field = sheet[i][columns[0]];
+      var status = sheet[i][columns[1]];
+      if (status){
+        if (groupedObject[field]) {
+            groupedObject[field]++
+        }else{
+          groupedObject[field] = 1;
+
+        }  
       }
     }
     return groupedObject;
@@ -205,5 +226,47 @@ export class ChartsService {
       }
     }
     return chart;
+  }
+
+  generatePie(data: any[], columns: any[], titleText: string){
+      // object for Pie chart
+      let sheet = data[0];
+      let objectPie = this._createObjectPieFromArray(sheet, columns)
+      console.log(this._generatePieArr(objectPie, titleText))
+      //
+  }
+  private _generatePieArr(objectPie: any, titleText: string) {
+    // let returnPie: any[] = [];
+    // const colors = ['#39aea9', '#fcd96a', '#73D94F', '#de3838', '#fed1b7'];
+    let jsonObj = {
+      "type": "pie",
+      "theme": "light",
+      "titles": [{
+        "text": " ",
+        "size": 20
+      }],
+      "dataProvider": [],
+    "fontFamily": "Arial, Helvetica, sans-serif",
+    "fontSize": 16,
+    "titleField": "title",
+    "valueField": "value",
+    "labelRadius": 5,
+    "radius": "42%",
+    "innerRadius": "60%",
+    "labelText": titleText,
+    "export": {
+      "enabled": true
+    }
+    }
+    console.log("Object for pie")
+    console.log(objectPie)
+    // for (let i = 0; i < objectPie.length; i++) {
+      
+    //   jsonObj.dataProvider[i].title = pieArray[i];
+    //   jsonObj.dataProvider[i].value = pieArray[i];
+    //   // currJsonObj.fillColors = colors[i];
+    //   returnPie.push(jsonObj);
+    // }
+    return jsonObj;
   }
 }
