@@ -25,6 +25,7 @@ export class ExecutionDashboardComponent implements OnInit, OnChanges {
       this.selected = 0;
       this.chart = this.chartsService.generateChart(this.sheetsArray, [[this.filterOptions[0].column, 105]],
         `סטטוס הביצוע של כלל המשימות חלוקה לפי ${this.filterOptions[0].optionName}`);
+      
     }
   }
 

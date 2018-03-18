@@ -259,14 +259,14 @@ export class ChartsService {
     }
     }
     console.log("Object for pie")
-    console.log(objectPie)
-    // for (let i = 0; i < objectPie.length; i++) {
-      
-    //   jsonObj.dataProvider[i].title = pieArray[i];
-    //   jsonObj.dataProvider[i].value = pieArray[i];
-    //   // currJsonObj.fillColors = colors[i];
-    //   returnPie.push(jsonObj);
-    // }
-    return jsonObj;
+
+    for (let pieData in objectPie ) {
+      let myval = objectPie[pieData];
+      let pieObject = {title: pieData, value: myval}
+
+      jsonObj.dataProvider.push(pieObject);
+    }
+
+    return JSON.stringify(jsonObj);
   }
 }
