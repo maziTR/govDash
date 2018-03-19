@@ -1,23 +1,27 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, Input  } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Input, OnChanges  } from '@angular/core';
 import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
-
 
 @Component({
   selector: 'pie-chart',
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.css']
 })
-export class PieChartComponent implements OnInit {
+
+export class PieChartComponent implements AfterViewInit, OnChanges {
   private chart: AmChart;
-  
+  @Input() data;
+  @Input() chartId: string;
+
   constructor(private AmCharts: AmChartsService) { }
 
-  ngOnInit() {
-    // this.ngAfterViewInit();
-    
+  ngOnChanges() {
+    this.chart = this.AmCharts.makeChart(this.chartId, this.data);
   }
+
   ngAfterViewInit(){
-    this.chart = this.AmCharts.makeChart( "chartdivpie", 
+    this.chart = this.AmCharts.makeChart(this.chartId, this.data);
+
+ /*    this.chart = this.AmCharts.makeChart( "chartdivpie", 
     {
       "type": "pie",
       "theme": "light",
@@ -87,7 +91,7 @@ export class PieChartComponent implements OnInit {
       "export": {
         "enabled": true
       }
-    } );
+    } ); */
   }
   ngOnDestroy() {
     if (this.chart) {

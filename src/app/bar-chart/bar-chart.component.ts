@@ -6,14 +6,11 @@ import { AmChartsService, AmChart } from "@amcharts/amcharts3-angular";
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css']
 })
-export class BarChartComponent implements OnInit, AfterViewInit, OnChanges {
+export class BarChartComponent implements AfterViewInit, OnChanges {
   private chart: AmChart;
   @Input() data;
   @Input() chartId: string;
   constructor(private AmCharts: AmChartsService) { }
-
-  ngOnInit() {
-  }
 
   ngAfterViewInit() {
     this.chart = this.AmCharts.makeChart(this.chartId, this.data);

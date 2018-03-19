@@ -9,9 +9,9 @@
       <select [(ngModel)]="selected" (ngModelChange)="updateChart()" class="filter">
         <option *ngFor="let option of filterOptions; let i = index" value={{i}}>{{option.optionName}}</option>
       </select>
-
       <bar-chart [data]="chart" [chartId]="'chartEId'"></bar-chart>
-      <pie-chart></pie-chart>
+      <pie-chart [data]="pie1" [chartId]="'chartPie1'"></pie-chart>
+      <pie-chart [data]="pie2" [chartId]="'chartPie2'"></pie-chart>
     </div>
   </div>
 </div>

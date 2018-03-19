@@ -228,12 +228,12 @@ export class ChartsService {
     return chart;
   }
 
-  generatePie(data: any[], columns: any[], titleText: string){
+  generatePie(data: any[], column, titleText: string){
       // object for Pie chart
       let sheet = data[0];
-      let objectPie = this._createObjectPieFromArray(sheet, columns)
+      let objectPie = this._createObjectPieFromArray(sheet, column)
       console.log(this._generatePieArr(objectPie, titleText))
-      //
+      return objectPie
   }
   private _generatePieArr(objectPie: any, titleText: string) {
     // let returnPie: any[] = [];
@@ -258,15 +258,16 @@ export class ChartsService {
       "enabled": true
     }
     }
-    console.log("Object for pie")
-
+// needs to be fixed - this needs to count how many times the
+// value is there and only then add it to the object! we need to use 
+// the colunm number here somewhere
     for (let pieData in objectPie ) {
-      let myval = objectPie[pieData];
-      let pieObject = {title: pieData, value: myval}
+      let currVal = objectPie[pieData];
+      let pieObject = {title: pieData, value: currVal}
 
       jsonObj.dataProvider.push(pieObject);
     }
 
-    return JSON.stringify(jsonObj);
+    return jsonObj;
   }
 }
