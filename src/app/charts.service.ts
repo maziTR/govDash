@@ -99,24 +99,6 @@ export class ChartsService {
     return groupedObject;
   }
 
-  // generate object for pie chart 
-  private _createObjectPieFromArray(sheet, columns) {
-    let groupedObject = {};
-    for (var i = 1; i < sheet.length; i++) {
-      var field = sheet[i][columns[0]];
-      var status = sheet[i][columns[1]];
-      if (status){
-        if (groupedObject[field]) {
-            groupedObject[field]++
-        }else{
-          groupedObject[field] = 1;
-
-        }  
-      }
-    }
-    return groupedObject;
-  }
-
   private _sumFieldCountObjects(array: any[]) {
     // get an array of all the fields
     let allFieldsArr = Object.keys(array[0]);
@@ -233,8 +215,26 @@ export class ChartsService {
       let sheet = data[0];
       let objectPie = this._createObjectPieFromArray(sheet, column)
       console.log(this._generatePieArr(objectPie, titleText))
-      return objectPie
+      return this._generatePieArr(objectPie, titleText)
   }
+
+  // generate object for pie chart 
+  private _createObjectPieFromArray(sheet, column) {
+    let groupedObject = {};
+    for (var i = 1; i < sheet.length; i++) {
+      var field = sheet[i][column];
+      /* var status = sheet[i][columns[1]]; */
+      if (status){
+        if (groupedObject[field]) {
+            groupedObject[field]++
+        }else{
+          groupedObject[field] = 1;
+        }  
+      }
+    }
+    return groupedObject;
+  }
+
   private _generatePieArr(objectPie: any, titleText: string) {
     // let returnPie: any[] = [];
     // const colors = ['#39aea9', '#fcd96a', '#73D94F', '#de3838', '#fed1b7'];
@@ -242,7 +242,7 @@ export class ChartsService {
       "type": "pie",
       "theme": "light",
       "titles": [{
-        "text": " ",
+        "text": titleText,
         "size": 20
       }],
       "dataProvider": [],
@@ -253,7 +253,7 @@ export class ChartsService {
     "labelRadius": 5,
     "radius": "42%",
     "innerRadius": "60%",
-    "labelText": titleText,
+    "labelText": "[[title]]",
     "export": {
       "enabled": true
     }
@@ -263,8 +263,8 @@ export class ChartsService {
 // the colunm number here somewhere
     for (let pieData in objectPie ) {
       let currVal = objectPie[pieData];
-      let pieObject = {title: pieData, value: currVal}
-
+      let pieObject = {"title": pieData, "value": currVal}
+      
       jsonObj.dataProvider.push(pieObject);
     }
 
