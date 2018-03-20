@@ -133,8 +133,7 @@ export class ChartsService {
 
   private _generateGraphArr(statuses: any[]) {
     let returnVal: any[] = [];
-    const colors = ['#39aea9', '#fcd96a', '#73D94F', '#de3838', '#fed1b7'];
-
+    const colors = ['#3b7eb3', '#fcd96a', '#7ba8cc', '#FF9800', '#FFC107'];
     for (let i = 0; i < statuses.length; i++) {
       let currJsonObj = {
         "valueAxis": "v1",
@@ -214,7 +213,6 @@ export class ChartsService {
       // object for Pie chart
       let sheet = data[0];
       let objectPie = this._createObjectPieFromArray(sheet, column)
-      console.log(this._generatePieArr(objectPie, titleText))
       return this._generatePieArr(objectPie, titleText)
   }
 
@@ -223,7 +221,7 @@ export class ChartsService {
     let groupedObject = {};
     for (var i = 1; i < sheet.length; i++) {
       var field = sheet[i][column];
-      /* var status = sheet[i][columns[1]]; */
+
       if (status){
         if (groupedObject[field]) {
             groupedObject[field]++
@@ -236,8 +234,6 @@ export class ChartsService {
   }
 
   private _generatePieArr(objectPie: any, titleText: string) {
-    // let returnPie: any[] = [];
-    // const colors = ['#39aea9', '#fcd96a', '#73D94F', '#de3838', '#fed1b7'];
     let jsonObj = {
       "type": "pie",
       "theme": "light",
@@ -247,6 +243,8 @@ export class ChartsService {
       }],
       "dataProvider": [],
     "fontFamily": "Arial, Helvetica, sans-serif",
+    "marginTop": 60,
+    "marginBottom": 30,
     "fontSize": 16,
     "titleField": "title",
     "valueField": "value",
@@ -264,8 +262,10 @@ export class ChartsService {
     for (let pieData in objectPie ) {
       let currVal = objectPie[pieData];
       let pieObject = {"title": pieData, "value": currVal}
-      
-      jsonObj.dataProvider.push(pieObject);
+      //to fix!
+      if (pieData != "undefined"){
+        jsonObj.dataProvider.push(pieObject);
+      }
     }
 
     return jsonObj;

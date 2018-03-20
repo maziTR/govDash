@@ -26,8 +26,8 @@ export class ExecutionDashboardComponent implements OnInit, OnChanges {
       this.selected = 0;
       this.chart = this.chartsService.generateChart(this.sheetsArray, [[this.filterOptions[0].column, 105]],
         `סטטוס הביצוע של כלל המשימות חלוקה לפי ${this.filterOptions[0].optionName}`);
-      this.pie1 = this.chartsService.generatePie(this.sheetsArray,104,"סטטוס ביצוע לכלל המשימות - סטטוס שנתי מטויב קצר");
-      this.pie2 = this.chartsService.generatePie(this.sheetsArray,105,"סטטוס ביצוע לכלל המשימות - סטטוס שנתי מטויב ארוך");
+      this.pie1 = this.chartsService.generatePie(this.sheetsArray,105,"סטטוס ביצוע לכלל המשימות - סטטוס שנתי מטויב קצר");
+      this.pie2 = this.chartsService.generatePie(this.sheetsArray,104,"סטטוס ביצוע לכלל המשימות - סטטוס שנתי מטויב ארוך");
       }
   }
 
