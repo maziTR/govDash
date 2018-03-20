@@ -18,10 +18,10 @@ var OAuth2 = google.auth.OAuth2;
 //   configAuth.googleAuth.callbackURL);
 
 // use first line in prod, and second line in dev
-// var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
-// 'z51bBjQNgS2__hu2X8rxx6oD', 'http://gov-dash.herokuapp.com/api/google/auth/callback');
 var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
-'z51bBjQNgS2__hu2X8rxx6oD', 'http://localhost:3000/api/google/auth/callback');
+'z51bBjQNgS2__hu2X8rxx6oD', 'http://gov-dash.herokuapp.com/api/google/auth/callback');
+// var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
+// 'z51bBjQNgS2__hu2X8rxx6oD', 'http://localhost:3000/api/google/auth/callback');
 
 var app = express();
 

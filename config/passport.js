@@ -14,8 +14,8 @@ const clientID = '834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleuserc
 const clientSecret = 'z51bBjQNgS2__hu2X8rxx6oD';
 
 // use first line in prod, and second line in dev
-// const callbackURL = 'http://gov-dash.herokuapp.com/api/google/auth/callback';
-const callbackURL = 'http://localhost:3000/api/google/auth/callback';
+const callbackURL = 'http://gov-dash.herokuapp.com/api/google/auth/callback';
+// const callbackURL = 'http://localhost:3000/api/google/auth/callback';
 
 var OAuth2 = google.auth.OAuth2;
 var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
