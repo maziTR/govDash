@@ -93,12 +93,10 @@ export class PieChartComponent implements AfterViewInit, OnChanges {
       }
     } ); */
   }
+  
   ngOnDestroy() {
     if (this.chart) {
       this.AmCharts.destroyChart(this.chart);
     }
   }
-
 }
-
-
