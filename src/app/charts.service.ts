@@ -54,9 +54,9 @@ export class ChartsService {
     outputArray.unshift(outputArray.pop());
     fieldChart.pop();
     graphArray = this._generateGraphArr(fieldChart);
-    
+
     // sort the fields (x axis) of the bar chart
-    outputArray.sort(function(a, b) {
+    outputArray.sort(function (a, b) {
       if (parseInt(a.field)) {
         return parseInt(a.field) - parseInt(b.field);
       }
@@ -64,7 +64,7 @@ export class ChartsService {
     });
 
     // Pie generator only for debug
-    this.generatePie(data, [105,105], titleText)
+    this.generatePie(data, [105, 105], titleText)
 
     return this._outputChart(outputArray, graphArray, titleText);
   }
@@ -73,7 +73,7 @@ export class ChartsService {
     let firstRowValues = dataArr[0][0];
     return filterFieldsArr.map(element => {
       let i = firstRowValues.indexOf(element);
-      return {column: i, optionName: element};
+      return { column: i, optionName: element };
     });
   }
 
@@ -209,11 +209,11 @@ export class ChartsService {
     return chart;
   }
 
-  generatePie(data: any[], column, titleText: string){
-      // object for Pie chart
-      let sheet = data[0];
-      let objectPie = this._createObjectPieFromArray(sheet, column)
-      return this._generatePieArr(objectPie, titleText)
+  generatePie(data: any[], column, titleText: string) {
+    // object for Pie chart
+    let sheet = data[0];
+    let objectPie = this._createObjectPieFromArray(sheet, column);
+    return this._generatePieArr(objectPie, titleText);
   }
 
   // generate object for pie chart 
@@ -221,13 +221,12 @@ export class ChartsService {
     let groupedObject = {};
     for (var i = 1; i < sheet.length; i++) {
       var field = sheet[i][column];
-
-      if (status){
+      if (field) {
         if (groupedObject[field]) {
-            groupedObject[field]++
-        }else{
+          groupedObject[field]++;
+        } else {
           groupedObject[field] = 1;
-        }  
+        }
       }
     }
     return groupedObject;
@@ -242,32 +241,34 @@ export class ChartsService {
         "size": 20
       }],
       "dataProvider": [],
-    "fontFamily": "Arial, Helvetica, sans-serif",
-    "marginTop": 60,
-    "marginBottom": 30,
-    "fontSize": 16,
-    "titleField": "title",
-    "valueField": "value",
-    "labelRadius": 5,
-    "radius": "42%",
-    "innerRadius": "60%",
-    "labelText": "[[title]]",
-    "export": {
-      "enabled": true
-    }
-    }
-// needs to be fixed - this needs to count how many times the
-// value is there and only then add it to the object! we need to use 
-// the colunm number here somewhere
-    for (let pieData in objectPie ) {
-      let currVal = objectPie[pieData];
-      let pieObject = {"title": pieData, "value": currVal}
-      //to fix!
-      if (pieData != "undefined"){
-        jsonObj.dataProvider.push(pieObject);
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "marginTop": 60,
+      "marginBottom": 30,
+      "fontSize": 16,
+      "titleField": "title",
+      "valueField": "value",
+      "labelRadius": 20,
+      "radius": "42%",
+      "innerRadius": "60%",
+      "labelText": "[[title]]",
+      "balloonText": "<span dir='rtl'>[[title]]<br><b>[[value]]</b> ([[percents]]%)</span>",
+      "export": {
+        "enabled": true
       }
     }
 
+    // needs to be fixed - this needs to count how many times the
+    // value is there and only then add it to the object! we need to use 
+    // the colunm number here somewhere
+    for (let pieData in objectPie) {
+      let currVal = objectPie[pieData];
+      let pieObject = { "title": pieData, "value": currVal };
+      jsonObj.dataProvider.push(pieObject);
+
+      jsonObj.dataProvider.sort(function (a, b) {
+        return a.title.localeCompare(b.title);
+      });
+    }
     return jsonObj;
   }
 }
