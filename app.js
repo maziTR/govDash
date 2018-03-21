@@ -11,17 +11,15 @@ var cookieParser = require('cookie-parser');
 const passport = require('passport');
 const expressSession = require('express-session');
 
-// var configAuth = require('./config/auth');
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-// var oauth2Client = new OAuth2(configAuth.googleAuth.clientID, configAuth.googleAuth.clientSecret,
-//   configAuth.googleAuth.callbackURL);
 
 // use first line in prod, and second line in dev
 // var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
 // 'z51bBjQNgS2__hu2X8rxx6oD', 'http://gov-dash.herokuapp.com/api/google/auth/callback');
 var oauth2Client = new OAuth2('834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com',
 'z51bBjQNgS2__hu2X8rxx6oD', 'http://localhost:3000/api/google/auth/callback');
+const fileId = "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg";
 
 var app = express();
 
@@ -54,7 +52,7 @@ app.get('/api/google/auth/callback', passport.authenticate('google', {
 // get the sheets data from the users file
 app.get('/api/data', isLoggedIn, function (req, res) {
   oauth2Client.credentials = { access_token: req.user.accessToken, refresh_token: req.user.refreshToken };
-  _getSheetsData(oauth2Client, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg", function (data) {
+  _getSheetsData(oauth2Client, fileId, function (data) {
     res.send(JSON.stringify(data));
   });
 });
@@ -71,25 +69,21 @@ function isLoggedIn(req, res, next) {
 // helper function to get the sheets data from the users file
 function _getSheetsData(auth, id, callback) {
   var sheets = google.sheets('v4');
-  var sheetsResult = [];
-  sheets.spreadsheets.values.batchGet({
+  var rows = [];
+  sheets.spreadsheets.values.get({
     auth: auth,
     spreadsheetId: id,
-    ranges: ["'DATA'"]
+    range: 'DATA'
   }, function (err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
       return;
     }
-    var rows = response.valueRanges;
+    rows = response.values;
     if (rows.length == 0) {
       console.log('No data found.');
-    } else {
-      for (let i = 0; i < rows.length; i++) {
-        sheetsResult[i] = rows[i].values;
-      }
     }
-    callback(sheetsResult);
+    callback(rows);
   });
 }
 

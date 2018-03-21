@@ -21,8 +21,17 @@ export class ChartsService {
     this.rawData = data;
   }
 
+  // gets an array of column names and returns an array of objects that include column number and name
+  findColumnNumByName(columnNamesArr: any[]) {
+    let firstRowValues = this.rawData[0];
+    return columnNamesArr.map(element => {
+      let i = firstRowValues.indexOf(element);
+      return { column: i, optionName: element };
+    });
+  }
+
   generateChart(data: any[], columns: any[], titleText: string) {
-    let sheet = data[0];
+    let sheet = data;
     let arrOfFieldsCount: any[] = [];
     let fieldCount = {};
     let fieldChart = [];
@@ -63,18 +72,7 @@ export class ChartsService {
       return a.field.localeCompare(b.field);
     });
 
-    // Pie generator only for debug
-    this.generatePie(data, [105, 105], titleText)
-
     return this._outputChart(outputArray, graphArray, titleText);
-  }
-
-  createFilter(dataArr: any[], filterFieldsArr: any[]) {
-    let firstRowValues = dataArr[0][0];
-    return filterFieldsArr.map(element => {
-      let i = firstRowValues.indexOf(element);
-      return { column: i, optionName: element };
-    });
   }
 
   private _createObjectFromArray(sheet, columns) {
@@ -211,7 +209,7 @@ export class ChartsService {
 
   generatePie(data: any[], column, titleText: string) {
     // object for Pie chart
-    let sheet = data[0];
+    let sheet = data;
     let objectPie = this._createObjectPieFromArray(sheet, column);
     return this._generatePieArr(objectPie, titleText);
   }
