@@ -43,7 +43,8 @@ app.use(passport.session());
 
 // routes for google authentication
 app.get('/api/google/auth', passport.authenticate('google',
-  { scope: ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/plus.login'], accessType: 'offline' }));
+  { scope: ['https://www.googleapis.com/auth/drive.readonly', 'https://www.googleapis.com/auth/plus.login'], 
+  accessType: 'offline' }));
 
 app.get('/api/google/auth/callback', passport.authenticate('google', {
   successRedirect: '/home',
