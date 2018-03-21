@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
   sheetsArray: any[];
   user: {name: string};
 
-  constructor(public chartsService: ChartsService, private userService: UserService) { }
+  constructor(private chartsService: ChartsService, private userService: UserService) { }
 
   ngOnInit() {
     this.chartsService.getTablesRequest().subscribe(data => {

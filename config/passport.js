@@ -1,14 +1,8 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var User = require('../mongoose-model/user');
-var App = require('../mongoose-model/app_model');
-// var configAuth = require('./auth');
 
 var google = require('googleapis');
-
-// const clientID = configAuth.googleAuth.clientID;
-// const clientSecret = configAuth.googleAuth.clientSecret;
-// const callbackURL = configAuth.googleAuth.callbackURL;
 
 const clientID = '834900121947-juto5crlbkmmtbs89al2f97q3m2bscbi.apps.googleusercontent.com';
 const clientSecret = 'z51bBjQNgS2__hu2X8rxx6oD';
@@ -16,6 +10,7 @@ const clientSecret = 'z51bBjQNgS2__hu2X8rxx6oD';
 // use first line in prod, and second line in dev
 // const callbackURL = 'http://gov-dash.herokuapp.com/api/google/auth/callback';
 const callbackURL = 'http://localhost:3000/api/google/auth/callback';
+const fileId = "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg";
 
 var OAuth2 = google.auth.OAuth2;
 var oauth2Client = new OAuth2(clientID, clientSecret, callbackURL);
@@ -46,31 +41,29 @@ module.exports = function (passport) {
                         return done(err);
                     if (user) {
                         // if a user is found and authorized to view our file, log them in
-                        checkAuthorization(accessToken, refreshToken, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg",
-                            function (response) {
-                                if (response) {
-                                    return done(null, user);
-                                } else {
-                                    return done(null, false);
-                                }
-                            });
+                        checkAuthorization(accessToken, refreshToken, fileId, function (response) {
+                            if (response) {
+                                return done(null, user);
+                            } else {
+                                return done(null, false);
+                            }
+                        });
                     } else {
                         // if the user is not in our database but authorized to view our file, create a new user
-                        checkAuthorization(accessToken, refreshToken, "1zO97T7yrioaRbnPafe6reJjF6bzVfxPqS6nTvlmJqMg",
-                            function (response) {
-                                if (response) {
-                                    var newUser = new User({
-                                        googleId: profile.id, accessToken: accessToken, refreshToken: refreshToken,
-                                        name: profile.displayName
-                                    });
-                                    newUser.save(function (err) {
-                                        if (err) console.error(err);
-                                        return done(null, newUser);
-                                    });
-                                } else {
-                                    return done(null, false);
-                                }
-                            });
+                        checkAuthorization(accessToken, refreshToken, fileId, function (response) {
+                            if (response) {
+                                var newUser = new User({
+                                    googleId: profile.id, accessToken: accessToken, refreshToken: refreshToken,
+                                    name: profile.displayName
+                                });
+                                newUser.save(function (err) {
+                                    if (err) console.error(err);
+                                    return done(null, newUser);
+                                });
+                            } else {
+                                return done(null, false);
+                            }
+                        });
                     }
                 });
             });

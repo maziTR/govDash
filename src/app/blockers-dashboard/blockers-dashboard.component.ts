@@ -25,15 +25,15 @@ export class BlockersDashboardComponent implements OnInit, OnChanges {
     this.chart2Title = "חסמים - ממשק מרכזי שהקשה על הביצוע - בחלוקה לתחומי על";
     if (this.sheetsArray) {
       // blockers chart 1 - missing resources - column names entered here
-      let field = this.chartsService.createFilter(['תחום-על'])[0].column;
-      let resourceQ1 = this.chartsService.createFilter(['Q1 חסמים משאבים - מטויב'])[0].column;
-      let resourceQ3 = this.chartsService.createFilter(['Q3 חסמים משאבים - מטויב'])[0].column;
-      let resourceQ4 = this.chartsService.createFilter(['2017 Q4- המשאב המרכזי שהיה חסר לפרויקט על מנת להתגבר על קשיי הביצוע'])[0].column;
+      let field = this.chartsService.findColumnNumByName(['תחום-על'])[0].column;
+      let resourceQ1 = this.chartsService.findColumnNumByName(['Q1 חסמים משאבים - מטויב'])[0].column;
+      let resourceQ3 = this.chartsService.findColumnNumByName(['Q3 חסמים משאבים - מטויב'])[0].column;
+      let resourceQ4 = this.chartsService.findColumnNumByName(['2017 Q4- המשאב המרכזי שהיה חסר לפרויקט על מנת להתגבר על קשיי הביצוע'])[0].column;
 
       // blockers chart 2 - interfaces - column names entered here
-      let interfaceQ1 = this.chartsService.createFilter(['Q1 חסמים ממשקים - מטויב'])[0].column;
-      let interfaceQ3 = this.chartsService.createFilter(['Q3 חסמים ממשקים - מטויב'])[0].column;
-      let interfaceQ4 = this.chartsService.createFilter(['2017 Q4- ממשק מרכזי שהקשה על הביצוע'])[0].column;
+      let interfaceQ1 = this.chartsService.findColumnNumByName(['Q1 חסמים ממשקים - מטויב'])[0].column;
+      let interfaceQ3 = this.chartsService.findColumnNumByName(['Q3 חסמים ממשקים - מטויב'])[0].column;
+      let interfaceQ4 = this.chartsService.findColumnNumByName(['2017 Q4- ממשק מרכזי שהקשה על הביצוע'])[0].column;
 
       this.chart1 = this.chartsService.generateChart(this.sheetsArray, [[field, resourceQ1], [field, resourceQ3], 
         [field, resourceQ4]], this.chart1Title);

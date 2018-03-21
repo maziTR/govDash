@@ -27,13 +27,13 @@ export class ExecutionDashboardComponent implements OnInit, OnChanges {
       let options = ['תחום-על', 'סגן מוביל במטה', 'התועלת הציבורית מהמשימה', 'ישימות המשימה באחוזים',
       'מעורבות מנכ"ל שוויון חברתי'];
       
-      this.filterOptions = this.chartsService.createFilter(options);
+      this.filterOptions = this.chartsService.findColumnNumByName(options);
       this.selected = 0;
 
       // name of y axis of execution bar chart and pie charts is entered here - currently calculating yearly status
       // of execution (short for bar chart and short & long for pie charts)
-      this.shortExecutionStatusCol = this.chartsService.createFilter(['סטטוס ביצוע שנתי מטויב (קצר)'])[0].column;
-      this.longExecutionStatusCol = this.chartsService.createFilter(['סטטוס ביצוע שנתי מטויב (ארוך)'])[0].column;
+      this.shortExecutionStatusCol = this.chartsService.findColumnNumByName(['סטטוס ביצוע שנתי מטויב (קצר)'])[0].column;
+      this.longExecutionStatusCol = this.chartsService.findColumnNumByName(['סטטוס ביצוע שנתי מטויב (ארוך)'])[0].column;
       
       this.chart = this.chartsService.generateChart(this.sheetsArray, [[this.filterOptions[0].column, 
         this.shortExecutionStatusCol]], `סטטוס הביצוע של כלל המשימות - לפי ${this.filterOptions[0].optionName}`);
