@@ -69,8 +69,8 @@ export class ChartsService {
     return this._outputChart(outputArray, graphArray, titleText);
   }
 
-  createFilter(dataArr: any[], filterFieldsArr: any[]) {
-    let firstRowValues = dataArr[0][0];
+  createFilter(filterFieldsArr: any[]) {
+    let firstRowValues = this.rawData[0][0];
     return filterFieldsArr.map(element => {
       let i = firstRowValues.indexOf(element);
       return { column: i, optionName: element };
