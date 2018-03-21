@@ -11,10 +11,10 @@ export class ExecutionDashboardComponent implements OnInit, OnChanges {
   chart: any;
   filterOptions: Array<{ column: number, optionName: string }>;
   selected: number;
-  pie1:any;
-  pie2:any;
-  shortExecutionStatusCol: any[];
-  longExecutionStatusCol: any[];
+  pie1: any;
+  pie2: any;
+  shortExecutionStatusCol: number;
+  longExecutionStatusCol: number;
   
   constructor(private chartsService: ChartsService) { }
 
