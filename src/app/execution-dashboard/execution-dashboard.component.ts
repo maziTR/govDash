@@ -35,7 +35,7 @@ export class ExecutionDashboardComponent implements OnInit, OnChanges {
       this.shortExecutionStatusCol = this.chartsService.findColumnNumByName(['סטטוס ביצוע שנתי מטויב (קצר)'])[0].column;
       this.longExecutionStatusCol = this.chartsService.findColumnNumByName(['סטטוס ביצוע שנתי מטויב (ארוך)'])[0].column;
       
-      this.chart = this.chartsService.generateChart(this.sheetsArray, [[this.filterOptions[0].column, 
+      this.chart = this.chartsService.generateBarChart(this.sheetsArray, [[this.filterOptions[0].column, 
         this.shortExecutionStatusCol]], `סטטוס הביצוע של כלל המשימות - לפי ${this.filterOptions[0].optionName}`);
       
       this.pie1 = this.chartsService.generatePie(this.sheetsArray, this.shortExecutionStatusCol, 
@@ -47,7 +47,7 @@ export class ExecutionDashboardComponent implements OnInit, OnChanges {
 
   updateChart() {
     let selectedOption = this.filterOptions[this.selected];
-    this.chart = this.chartsService.generateChart(this.sheetsArray, [[selectedOption.column, this.shortExecutionStatusCol]],
+    this.chart = this.chartsService.generateBarChart(this.sheetsArray, [[selectedOption.column, this.shortExecutionStatusCol]],
       `סטטוס הביצוע של כלל המשימות - לפי ${selectedOption.optionName}`);
   }
 }

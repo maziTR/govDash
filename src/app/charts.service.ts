@@ -30,7 +30,8 @@ export class ChartsService {
     });
   }
 
-  generateChart(data: any[], columns: any[], titleText: string) {
+  //Bar Charts algorithm
+  generateBarChart(data: any[], columns: any[], titleText: string) {
     let sheet = data;
     let arrOfFieldsCount: any[] = [];
     let fieldCount = {};
@@ -39,12 +40,12 @@ export class ChartsService {
     let graphArray: any[];
 
     for (let i = 0; i < columns.length; i++) {
-      arrOfFieldsCount.push(this._createObjectFromArray(sheet, columns[i]));
+      arrOfFieldsCount.push(this._createBarObjectFromArray(sheet, columns[i]));
     }
 
     // check if we need to calculate more than 2 columns
     if (arrOfFieldsCount.length > 1) {
-      fieldCount = this._sumFieldCountObjects(arrOfFieldsCount);
+      fieldCount = this._sumFieldCountBarObjects(arrOfFieldsCount);
     } else {
       fieldCount = arrOfFieldsCount[0];
     }
@@ -62,7 +63,7 @@ export class ChartsService {
     }
     outputArray.unshift(outputArray.pop());
     fieldChart.pop();
-    graphArray = this._generateGraphArr(fieldChart);
+    graphArray = this._generateBarGraphArr(fieldChart);
 
     // sort the fields (x axis) of the bar chart
     outputArray.sort(function (a, b) {
@@ -72,10 +73,10 @@ export class ChartsService {
       return a.field.localeCompare(b.field);
     });
 
-    return this._outputChart(outputArray, graphArray, titleText);
+    return this._outputBarChart(outputArray, graphArray, titleText);
   }
-
-  private _createObjectFromArray(sheet, columns) {
+  //
+  private _createBarObjectFromArray(sheet, columns) {
     let groupedObject = {};
     for (var i = 1; i < sheet.length; i++) {
       var field = sheet[i][columns[0]];
@@ -97,7 +98,7 @@ export class ChartsService {
     return groupedObject;
   }
 
-  private _sumFieldCountObjects(array: any[]) {
+  private _sumFieldCountBarObjects(array: any[]) {
     // get an array of all the fields
     let allFieldsArr = Object.keys(array[0]);
     let sumOfFieldCount = {};
@@ -129,7 +130,7 @@ export class ChartsService {
     return sumOfFieldCount;
   }
 
-  private _generateGraphArr(statuses: any[]) {
+  private _generateBarGraphArr(statuses: any[]) {
     let returnVal: any[] = [];
     const colors = ['#3b7eb3', '#fcd96a', '#7ba8cc', '#FF9800', '#FFC107'];
     for (let i = 0; i < statuses.length; i++) {
@@ -154,7 +155,7 @@ export class ChartsService {
     return returnVal;
   }
 
-  private _outputChart(dataProviderArr: any[], dataGraphArr: any[], titleText: string) {
+  private _outputBarChart(dataProviderArr: any[], dataGraphArr: any[], titleText: string) {
     const chart = {
       "type": "serial",
       "theme": "light",
@@ -207,6 +208,8 @@ export class ChartsService {
     return chart;
   }
 
+  // Pie chart algorithm
+  
   generatePie(data: any[], column, titleText: string) {
     // object for Pie chart
     let sheet = data;

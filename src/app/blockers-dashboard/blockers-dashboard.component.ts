@@ -35,9 +35,9 @@ export class BlockersDashboardComponent implements OnInit, OnChanges {
       let interfaceQ3 = this.chartsService.findColumnNumByName(['Q3 חסמים ממשקים - מטויב'])[0].column;
       let interfaceQ4 = this.chartsService.findColumnNumByName(['2017 Q4- ממשק מרכזי שהקשה על הביצוע'])[0].column;
 
-      this.chart1 = this.chartsService.generateChart(this.sheetsArray, [[field, resourceQ1], [field, resourceQ3], 
+      this.chart1 = this.chartsService.generateBarChart(this.sheetsArray, [[field, resourceQ1], [field, resourceQ3], 
         [field, resourceQ4]], this.chart1Title);
-      this.chart2 = this.chartsService.generateChart(this.sheetsArray, [[field, interfaceQ1], [field, interfaceQ3], 
+      this.chart2 = this.chartsService.generateBarChart(this.sheetsArray, [[field, interfaceQ1], [field, interfaceQ3], 
         [field, interfaceQ4]], this.chart2Title);
     }
   }
