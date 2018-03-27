@@ -6,9 +6,12 @@
   </div>
   <div class="container">
     <div *ngIf="chart">
-      <select [(ngModel)]="selected" (ngModelChange)="updateChart()" class="filter">
-        <option *ngFor="let option of filterOptions; let i = index" value={{i}}>{{option.optionName}}</option>
-      </select>
+      <div class="form-group">
+          <label>בחר גרף להצגה - סטטוס ביצוע לפי:</label>
+          <select [(ngModel)]="selected" (ngModelChange)="updateChart()" class="filter">
+            <option *ngFor="let option of filterOptions; let i = index" value={{i}}>{{option.optionName}}</option>
+          </select>
+      </div>
       <bar-chart [data]="chart" [chartId]="'chartEId'"></bar-chart>
       <pie-chart [data]="pie1" [chartId]="'chartPie1'"></pie-chart>
       <pie-chart [data]="pie2" [chartId]="'chartPie2'"></pie-chart>
